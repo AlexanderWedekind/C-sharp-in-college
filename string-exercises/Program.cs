@@ -28,10 +28,10 @@ namespace strings
             firstName = TrimLeadingSpaces(Console.ReadLine());
 
             Console.WriteLine("Thank you, now please choose your character's lastname...\n(typr their lastname, then press ENTER)");
-            lastName = Console.ReadLine();
+            lastName = TrimLeadingSpaces(Console.ReadLine());
 
             Console.WriteLine("And finally, what is your character's nickname...\n(type their nickname, then press ENTER)");
-            nickName = Console.ReadLine();
+            nickName = TrimLeadingSpaces(Console.ReadLine());
 
             nickNameInTheMiddle = "\"" + nickName + "\"";
 
@@ -39,14 +39,13 @@ namespace strings
 
             Console.WriteLine(fullName);
 
-            Console.WriteLine(fullName.Length);
-            Console.WriteLine(fullName.LastIndexOf(" "));
-            Console.WriteLine(fullName.Length - fullName.LastIndexOf(" "));
-        
-
             abbreviatedName = fullName.Substring(0, 1) + fullName.Substring(fullName.LastIndexOf(" "), fullName.Length - fullName.LastIndexOf(" "));
 
             Console.WriteLine(abbreviatedName);
+
+            
+
+
 
            
 
