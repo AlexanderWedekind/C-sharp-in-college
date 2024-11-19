@@ -7,14 +7,25 @@ namespace strings
     {
         public static void Main()
         {
-            String firstName;
-            String lastName;
-            String nickName;
-            String nickNameInTheMiddle;
-            String abbreviatedName = " ";
+            String firstName = "";
+            String lastName = "";
+            String nickName = "";
+            String nickNameInTheMiddle = "";
+            String fullName = "";
+            String abbreviatedName = "";
+
+            static string TrimLeadingSpaces(string name)
+            {   
+                String trimmedName = name;
+                while(trimmedName.Substring(0, 1) == " ")
+                {
+                    trimmedName = trimmedName.Substring(1, trimmedName.Length - 1);
+                }
+                return trimmedName;
+            }
 
             Console.WriteLine("Choose your character's first name...\n(type their name, then press ENTER)");
-            firstName = Console.ReadLine();
+            firstName = TrimLeadingSpaces(Console.ReadLine());
 
             Console.WriteLine("Thank you, now please choose your character's lastname...\n(typr their lastname, then press ENTER)");
             lastName = Console.ReadLine();
@@ -24,7 +35,18 @@ namespace strings
 
             nickNameInTheMiddle = "\"" + nickName + "\"";
 
-            Console.WriteLine("Okay, your character is called: " + firstName + " " + nickNameInTheMiddle + " " + lastName );
+            fullName = firstName + " " + nickNameInTheMiddle + " " + lastName;
+
+            Console.WriteLine(fullName);
+
+            Console.WriteLine(fullName.Length);
+            Console.WriteLine(fullName.LastIndexOf(" "));
+            Console.WriteLine(fullName.Length - fullName.LastIndexOf(" "));
+        
+
+            abbreviatedName = fullName.Substring(0, 1) + fullName.Substring(fullName.LastIndexOf(" "), fullName.Length - fullName.LastIndexOf(" "));
+
+            Console.WriteLine(abbreviatedName);
 
            
 
