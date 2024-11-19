@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\Do they retire\\Do they retire.csproj": {}
+    "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\string-exercises\\string-exercises.csproj": {}
   },
   "projects": {
-    "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\Do they retire\\Do they retire.csproj": {
+    "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\string-exercises\\string-exercises.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\Do they retire\\Do they retire.csproj",
-        "projectName": "Do they retire",
-        "projectPath": "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\Do they retire\\Do they retire.csproj",
+        "projectUniqueName": "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\string-exercises\\string-exercises.csproj",
+        "projectName": "string-exercises",
+        "projectPath": "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\string-exercises\\string-exercises.csproj",
         "packagesPath": "C:\\Users\\09005493\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\Do they retire\\obj\\",
+        "outputPath": "C:\\Users\\09005493\\OneDrive - UHI\\repositories\\C-sharp-in-college\\string-exercises\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\09005493\\AppData\\Roaming\\NuGet\\NuGet.Config"

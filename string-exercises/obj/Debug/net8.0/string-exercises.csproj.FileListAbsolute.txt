@@ -1,0 +1,15 @@
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\bin\Debug\net8.0\string-exercises.exe
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\bin\Debug\net8.0\string-exercises.deps.json
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\bin\Debug\net8.0\string-exercises.runtimeconfig.json
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\bin\Debug\net8.0\string-exercises.dll
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\bin\Debug\net8.0\string-exercises.pdb
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.AssemblyInfoInputs.cache
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.AssemblyInfo.cs
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.csproj.CoreCompileInputs.cache
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.sourcelink.json
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.dll
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\refint\string-exercises.dll
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.pdb
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\string-exercises.genruntimeconfig.cache
+C:\Users\09005493\OneDrive - UHI\repositories\C-sharp-in-college\string-exercises\obj\Debug\net8.0\ref\string-exercises.dll
