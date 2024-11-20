@@ -35,13 +35,13 @@ namespace strings
             }
 
             Console.WriteLine("Choose your character's first name...\n(type their name, then press ENTER)");
-            firstName = TrimLeadingSpaces(Console.ReadLine());
+            firstName = TrimTrailingSpace(TrimLeadingSpaces(Console.ReadLine()));
 
             Console.WriteLine("Thank you, now please choose your character's lastname...\n(typr their lastname, then press ENTER)");
-            lastName = TrimLeadingSpaces(Console.ReadLine());
+            lastName = TrimTrailingSpace(TrimLeadingSpaces(Console.ReadLine()));
 
             Console.WriteLine("And finally, what is your character's nickname...\n(type their nickname, then press ENTER)");
-            nickName = TrimLeadingSpaces(Console.ReadLine());
+            nickName = TrimTrailingSpace(TrimLeadingSpaces(Console.ReadLine()));
 
             nickNameInTheMiddle = "\"" + nickName + "\"";
 
