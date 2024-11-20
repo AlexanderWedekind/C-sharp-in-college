@@ -24,6 +24,16 @@ namespace strings
                 return trimmedName;
             }
 
+            static string TrimTrailingSpace(string name)
+            {
+                String trimmedName = name;
+                while(trimmedName.Substring(trimmedName.Length - 1, 1) == " ")
+                {
+                    trimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+                }
+                return trimmedName;
+            }
+
             Console.WriteLine("Choose your character's first name...\n(type their name, then press ENTER)");
             firstName = TrimLeadingSpaces(Console.ReadLine());
 
