@@ -19,6 +19,8 @@ namespace strings
             String askNickName = "And finally, what is your character's nickname...\n(type their nickname, then press ENTER)";
             String rejectEmptyInput = "You can't leave this blank. Please choose something and press ENTER";
 
+            Random random = new Random();
+
 
             
 
@@ -26,49 +28,49 @@ namespace strings
             {
                 if(input == "")
                 {
-                    Console.WriteLine("TestForEmptyString: \n" + "(" + input + " == \"\"): " + (input == ""));
-                    Console.WriteLine("returning true");
+                    //Console.WriteLine("TestForEmptyString: \n" + "(" + input + " == \"\"): " + (input == ""));
+                   // Console.WriteLine("returning true");
                     return true;
                 }
-                Console.WriteLine("TestForEmptyString: \n" + "(" + input + " == \"\"" + " :" + (input == ""));
-                Console.WriteLine("returning false");
+                //Console.WriteLine("TestForEmptyString: \n" + "(" + input + " == \"\"" + " :" + (input == ""));
+                //Console.WriteLine("returning false");
                 return false;
             }    
 
             static string TrimLeadingSpaces(string name)
             {   
                 String trimmedName = name;
-                Console.WriteLine("TrimLeadingSpaces: \n" + "trimmedName: \"" + trimmedName + "\"");
+                //Console.WriteLine("TrimLeadingSpaces: \n" + "trimmedName: \"" + trimmedName + "\"");
                 if(TestForEmptyString(trimmedName) == false)
                 {
                     int count = 0;
-                    Console.WriteLine("in \"if\"\n trimmedName: \"" + trimmedName + "\" | count: " + count);
+                    //Console.WriteLine("in \"if\"\n trimmedName: \"" + trimmedName + "\" | count: " + count);
                     while(trimmedName.Substring(0, 1) == " ")
                     {
                         count += 1;
-                        Console.WriteLine("in \"while\": trimmedName: \"" + trimmedName + "\" | count: " + count);
-                        Console.WriteLine("in \"while\": trimmedName.Substring(0, 1): " + "\"" + trimmedName.Substring(0, 1) + "\"");
+                        //Console.WriteLine("in \"while\": trimmedName: \"" + trimmedName + "\" | count: " + count);
+                        //Console.WriteLine("in \"while\": trimmedName.Substring(0, 1): " + "\"" + trimmedName.Substring(0, 1) + "\"");
                         if(trimmedName.Length > 1)
                         {
-                            Console.WriteLine("(trimmedName.Length > 1): " + (trimmedName.Length > 1));
-                            Console.WriteLine("trimmedName.Substring(1, trimmedName.Length - 1): \"" + trimmedName.Substring(1, trimmedName.Length - 1) + "\"");
-                            Console.WriteLine("trimmedName: \"" + trimmedName + "\"");
+                            //Console.WriteLine("(trimmedName.Length > 1): " + (trimmedName.Length > 1));
+                            //Console.WriteLine("trimmedName.Substring(1, trimmedName.Length - 1): \"" + trimmedName.Substring(1, trimmedName.Length - 1) + "\"");
+                            //Console.WriteLine("trimmedName: \"" + trimmedName + "\"");
                             trimmedName = trimmedName.Substring(1, trimmedName.Length - 1);
                             
                             
-                            Console.WriteLine("trimmedName: \"" + trimmedName + "\"");
+                            //Console.WriteLine("trimmedName: \"" + trimmedName + "\"");
                         }
                         else
                         {
-                            Console.WriteLine("(trimmedName.Length > 1): " + (trimmedName.Length > 1));
-                            Console.WriteLine("trimmedName.Substring(0, 0): " + "\"" + trimmedName.Substring(0, 0) + "\"");
-                            Console.WriteLine("trimmedName: " + trimmedName);
+                            //Console.WriteLine("(trimmedName.Length > 1): " + (trimmedName.Length > 1));
+                            //Console.WriteLine("trimmedName.Substring(0, 0): " + "\"" + trimmedName.Substring(0, 0) + "\"");
+                            //Console.WriteLine("trimmedName: " + trimmedName);
                             trimmedName = trimmedName.Substring(0, 0);
-                            Console.WriteLine("trimmedName: " + trimmedName);
+                            //Console.WriteLine("trimmedName: " + trimmedName);
                         }
                     }
                 }
-                Console.WriteLine("returning: \"" + trimmedName + "\"");
+                //Console.WriteLine("returning: \"" + trimmedName + "\"");
                 return trimmedName;
             }
 
@@ -103,21 +105,9 @@ namespace strings
                 {
                     playerInput = CollectPlayerInput(rejectEmptyInput);
                 }
-                return (TrimTrailingSpaces(TrimLeadingSpaces(playerInput)));
+                return TrimTrailingSpaces(TrimLeadingSpaces(playerInput));
             }
-
-
-
-            
-
-
-            
-
-            
-            
            
-
-            
             firstName = SanitizedPlayerInput(CollectPlayerInput(askFirstName));
 
             lastName = SanitizedPlayerInput(CollectPlayerInput(askLastName));
@@ -132,7 +122,14 @@ namespace strings
 
             abbreviatedName = fullName.Substring(0, 1) + fullName.Substring(fullName.LastIndexOf(" "), fullName.Length - fullName.LastIndexOf(" "));
 
-            Console.WriteLine("abbreviated: " + abbreviatedName);
+            
+            int strength = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+            int dexterity = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+            int willpower = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+
+            Console.WriteLine("Your stats are: \n Strength: " + strength + "\nDexterity: " + dexterity + "\nWillpower: " + willpower);
+
+            
 
             
 
