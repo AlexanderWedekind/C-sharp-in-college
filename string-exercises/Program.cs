@@ -15,7 +15,7 @@ namespace strings
             String abbreviatedName = "";
 
             String askFirstName = "Choose your character's first name...\n(type their name, then press ENTER)";
-            String askLastName = "Thank you, now please choose your character's lastname...\n(typr their lastname, then press ENTER)";
+            String askLastName = "Thank you, now please choose your character's lastname...\n(type their lastname, then press ENTER)";
             String askNickName = "And finally, what is your character's nickname...\n(type their nickname, then press ENTER)";
             String rejectEmptyInput = "You can't leave this blank. Please choose something and press ENTER";
 
@@ -26,34 +26,61 @@ namespace strings
             {
                 if(input == "")
                 {
+                    Console.WriteLine("TestForEmptyString: \n" + "(" + input + " == \"\"): " + (input == ""));
+                    Console.WriteLine("returning true");
                     return true;
                 }
+                Console.WriteLine("TestForEmptyString: \n" + "(" + input + " == \"\"" + " :" + (input == ""));
+                Console.WriteLine("returning false");
                 return false;
             }    
 
             static string TrimLeadingSpaces(string name)
             {   
                 String trimmedName = name;
-                while(trimmedName.Substring(0, 1) == " ")
+                Console.WriteLine("TrimLeadingSpaces: \n" + "trimmedName: \"" + trimmedName + "\"");
+                if(TestForEmptyString(trimmedName) == false)
                 {
-                    if(trimmedName.Length > 1)
+                    int count = 0;
+                    Console.WriteLine("in \"if\"\n trimmedName: \"" + trimmedName + "\" | count: " + count);
+                    while(trimmedName.Substring(0, 1) == " ")
                     {
-                    trimmedName = trimmedName.Substring(1, trimmedName.Length - 1);
-                    }
-                    else
-                    {
-                        trimmedName = trimmedName.Substring(0, 0);
+                        count += 1;
+                        Console.WriteLine("in \"while\": trimmedName: \"" + trimmedName + "\" | count: " + count);
+                        Console.WriteLine("in \"while\": trimmedName.Substring(0, 1): " + "\"" + trimmedName.Substring(0, 1) + "\"");
+                        if(trimmedName.Length > 1)
+                        {
+                            Console.WriteLine("(trimmedName.Length > 1): " + (trimmedName.Length > 1));
+                            Console.WriteLine("trimmedName.Substring(1, trimmedName.Length - 1): \"" + trimmedName.Substring(1, trimmedName.Length - 1) + "\"");
+                            Console.WriteLine("trimmedName: \"" + trimmedName + "\"");
+                            trimmedName = trimmedName.Substring(1, trimmedName.Length - 1);
+                            
+                            
+                            Console.WriteLine("trimmedName: \"" + trimmedName + "\"");
+                        }
+                        else
+                        {
+                            Console.WriteLine("(trimmedName.Length > 1): " + (trimmedName.Length > 1));
+                            Console.WriteLine("trimmedName.Substring(0, 0): " + "\"" + trimmedName.Substring(0, 0) + "\"");
+                            Console.WriteLine("trimmedName: " + trimmedName);
+                            trimmedName = trimmedName.Substring(0, 0);
+                            Console.WriteLine("trimmedName: " + trimmedName);
+                        }
                     }
                 }
+                Console.WriteLine("returning: \"" + trimmedName + "\"");
                 return trimmedName;
             }
 
             static string TrimTrailingSpaces(string name)
             {
                 String trimmedName = name;
-                while(trimmedName.Substring(trimmedName.Length - 1, 1) == " ")
+                if(TestForEmptyString(trimmedName) == false)
                 {
-                    trimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+                    while(trimmedName.Substring(trimmedName.Length - 1, 1) == " ")
+                    {
+                        trimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+                    }
                 }
                 return trimmedName;
             }
@@ -76,7 +103,7 @@ namespace strings
                 {
                     playerInput = CollectPlayerInput(rejectEmptyInput);
                 }
-                return playerInput;
+                return (TrimTrailingSpaces(TrimLeadingSpaces(playerInput)));
             }
 
 
@@ -105,7 +132,7 @@ namespace strings
 
             abbreviatedName = fullName.Substring(0, 1) + fullName.Substring(fullName.LastIndexOf(" "), fullName.Length - fullName.LastIndexOf(" "));
 
-            Console.WriteLine(abbreviatedName);
+            Console.WriteLine("abbreviated: " + abbreviatedName);
 
             
 
