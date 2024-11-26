@@ -6,7 +6,10 @@ class Program
             int chosenForTimesTables = 0;
 
             String viewTimestables = "Pick a number to see the times-tables for it, up to 12\nType a number, then press ENTER";
-            String thankYouTimesTables = "Great! Let see the times-tables for " + chosenForTimesTables;
+            string thankYouTimesTables()
+            {
+                return "Great! Let see the times-tables for " + chosenForTimesTables;
+            }
 
             void MessagePlayer(string message)
             {
@@ -19,19 +22,24 @@ class Program
                 return Console.ReadLine();
             }
 
+            // Boolean ValidateInput(string userInput)
+            // {
+            //     if(userInput ==)
+            // }
+
             void ShowTimestables(int number)
             {
                 int currentTable = 1;
                 int lineInTable = 1;
                 for(int i = 0; i < 12; i++)
                 {
-                    
+
                 }
             }
 
             chosenForTimesTables = int.Parse(CollectPlayerInput(viewTimestables));
 
-            MessagePlayer(thankYouTimesTables);
+            MessagePlayer(thankYouTimesTables());
 
 
         }

@@ -23,8 +23,14 @@ namespace strings
             String askLastName = "Thank you, now please choose your character's lastname...\n(type their lastname, then press ENTER)";
             String askNickName = "And finally, what is your character's nickname...\n(type their nickname, then press ENTER)";
             String rejectEmptyInput = "You can't leave this blank. Please choose something and press ENTER";
-            String welcomeMessage = "Welcome, " + fullName + "!";
-            String announceStats = "Your stats are: \n Strength: " + strength + "\nDexterity: " + dexterity + "\nWillpower: " + willpower;
+            string welcomeMessage()
+            {
+                return "Welcome, " + fullName + "!";
+            }
+            string announceStats()
+            {
+                return "Your stats are: \n Strength: " + strength + "\nDexterity: " + dexterity + "\nWillpower: " + willpower;
+            }
             String askCharacterClass = "Choose the class you want to play as; Mage (M), Warrior (W) or Thief (T). \n(Type \"m\", \"w\" or \"t\", then press ENTER)";
             String rejectInvalidClassChoice = "You must choose either Mage (M), Warrior (W) or Thief (T)\nPlease type \"m\", \"w\" or \"t\" to choose your class, then press ENTER";
 
@@ -160,7 +166,7 @@ namespace strings
 
             fullName = firstName + " " + nickNameInTheMiddle + " " + lastName;
 
-            AskPlayer(welcomeMessage);
+            AskPlayer(welcomeMessage());
 
             abbreviatedName = fullName.Substring(0, 1) + fullName.Substring(fullName.LastIndexOf(" "), fullName.Length - fullName.LastIndexOf(" "));
 

@@ -34,7 +34,7 @@ class Program
         }
         String end = "Thank you for spectating! See you next time.";
         
-
+    
         int orcHealth = 200;
         int dwarfHealth = 200;
 
@@ -120,5 +120,10 @@ class Program
         }
 
         Game();
+    }
+
+    private static void MessageSpectator(Func<string> doesDamage)
+    {
+        throw new NotImplementedException();
     }
 }
