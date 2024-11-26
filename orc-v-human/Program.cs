@@ -19,7 +19,8 @@ class Program
         string doesDamage()
         {
             return "He does " + damage + " damage to " + opponent + "!";
-        }
+        } 
+       
         String orc = "Uruk-Hai";
         String dwarf = "Gimli";
         string announceHealth()
