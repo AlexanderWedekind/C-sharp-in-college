@@ -52,20 +52,15 @@ namespace strings
             static string TrimLeadingSpaces(string name)
             {   
                 String trimmedName = name;
-                if(TestForEmptyString(trimmedName) == false)
+                while(TestForEmptyString(trimmedName) == false && trimmedName.Substring(0, 1) == " ")
                 {
-                    int count = 0;
-                    while(trimmedName.Substring(0, 1) == " ")
+                    if(trimmedName.Length > 1)
                     {
-                        count += 1;
-                        if(trimmedName.Length > 1)
-                        {
-                            trimmedName = trimmedName.Substring(1, trimmedName.Length - 1);
-                        }
-                        else
-                        {
-                            trimmedName = trimmedName.Substring(0, 0);
-                        }
+                        trimmedName = trimmedName.Substring(1, trimmedName.Length - 1);
+                    }
+                    else
+                    {
+                        trimmedName = trimmedName.Substring(0, 0);
                     }
                 }
                 return trimmedName;
@@ -74,18 +69,15 @@ namespace strings
             static string TrimTrailingSpaces(string name)
             {
                 String trimmedName = name;
-                if(TestForEmptyString(trimmedName) == false)
+                while(TestForEmptyString(trimmedName) == false && trimmedName.Substring(trimmedName.Length - 1, 1) == " ")
                 {
-                    while(trimmedName.Substring(trimmedName.Length - 1, 1) == " ")
+                    if(trimmedName.Length > 1)
                     {
-                        if(trimmedName.Length > 1)
-                        {
-                            trimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
-                        }
-                        else
-                        {
-                            trimmedName = trimmedName.Substring(0, 0);
-                        }
+                        trimmedName = trimmedName.Substring(0, trimmedName.Length - 1);
+                    }
+                    else
+                    {
+                        trimmedName = trimmedName.Substring(0, 0);
                     }
                 }
                 return trimmedName;
