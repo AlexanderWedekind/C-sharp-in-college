@@ -1,7 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
 
-namespace strings
+using System.Collections;
+
+namespace string_exercises
 {
     class Program
     {
@@ -14,6 +16,37 @@ namespace strings
             String fullName = "";
             String abbreviatedName = "";
             String characterClass = "";
+            (string option1, string option2, string article) StartItemOptions(string characterClass)
+            {
+                String article = "";
+                String item1 = "";
+                String item2 = "";
+                String choiceKey1 = "";
+                String choiceKey2 = "";
+                switch(characterClass)
+                {
+                    case "Mage":
+                        item1 = "Staff" ;
+                        choiceKey1 = "(S)";
+                        item2 = "Spellbook";
+                        choiceKey2 = "(B)";
+                        article = "A";
+                        break;
+                    case "Warrior":
+                        item1 = "Axe";
+                        choice
+                        item2 = "Sword";
+                        article = "An";
+                        break;
+                    case "Thief":
+                        item1 = "Bow";
+                        item2 = "Dagger";
+                        article = "A";
+                        break;
+                }
+                return (item1, item2, article);
+            }
+            String startingItem = "";
             int strength = 0;
             int dexterity = 0;
             int willpower = 0;
@@ -33,7 +66,14 @@ namespace strings
             }
             String askCharacterClass = "Choose the class you want to play as; Mage (M), Warrior (W) or Thief (T). \n(Type \"m\", \"w\" or \"t\", then press ENTER)";
             String rejectInvalidClassChoice = "You must choose either Mage (M), Warrior (W) or Thief (T)\nPlease type \"m\", \"w\" or \"t\" to choose your class, then press ENTER";
-
+            string announceclassChoice()
+            {
+                return "You have chosen to play the " + characterClass + " class.";
+            }
+            string askStartingItem()
+            {
+                return "Choose your starting item.\nWould you like " + StartItemOptions(characterClass).article + " " + StartItemOptions(characterClass).option1 + " or "
+            }
 
             Random random = new Random();
 
@@ -127,8 +167,8 @@ namespace strings
 
             string CollectClassChoice()
             {
-                String chosenClass = "";
-                chosenClass = SanitizedPlayerInput(CollectPlayerInput(askCharacterClass));
+                String returnChosenClass = "";
+                String chosenClass = SanitizedPlayerInput(CollectPlayerInput(askCharacterClass));
                 while(CheckClassChoice(chosenClass) == false)
                 {
                     chosenClass = SanitizedPlayerInput(CollectPlayerInput(rejectInvalidClassChoice));
@@ -136,16 +176,23 @@ namespace strings
                 switch(chosenClass)
                 {
                     case "m":
-                        chosenClass = "Mage";
+                        returnChosenClass = "Mage";
                         break;
                     case "w":
-                        chosenClass = "Warrior";
+                        returnChosenClass = "Warrior";
                         break;
                     case "t":
-                        chosenClass = "Thief";
+                        returnChosenClass = "Thief";
                         break;
                 }
-                return chosenClass;
+                return returnChosenClass;
+            }
+
+            string CollectStartingItemChoice()
+            {
+                String validChoice = "";
+                String playerInput = SanitizedPlayerInput(CollectPlayerInput(askStartingItem()));
+                return validChoice;
             }
            
             firstName = SanitizedPlayerInput(CollectPlayerInput(askFirstName));
@@ -167,24 +214,11 @@ namespace strings
             dexterity = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
             willpower = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
 
-            AskPlayer(abbreviatedName + "\n" + announceStats);
+            AskPlayer(abbreviatedName + "\n" + announceStats());
 
+            characterClass = CollectClassChoice();
 
-
-            
-
-            
-         
-
-
-
-
-
-            
-
-
-
-           
+            AskPlayer(announceclassChoice());
 
         }
     }
