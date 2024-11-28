@@ -122,8 +122,8 @@ class Program
         Game();
     }
 
-    private static void MessageSpectator(Func<string> doesDamage)
-    {
-        throw new NotImplementedException();
-    }
+    // private static void MessageSpectator(Func<string> doesDamage)
+    // {
+    //     throw new NotImplementedException();
+    // }
 }
