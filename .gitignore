@@ -1,4 +1,6 @@
 bin/
+bin/Debug/
+bin/Debug/net8.0
 obj/
 .cache
 .editorconfig
