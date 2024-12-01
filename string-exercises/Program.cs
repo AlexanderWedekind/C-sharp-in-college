@@ -16,7 +16,7 @@ namespace string_exercises
             String fullName = "";
             String abbreviatedName = "";
             String characterClass = "";
-            (string option1, string option2, string article) StartItemOptions(string characterClass)
+            (string option1, string choiceKey1, string option2, string choiceKey2, string article) StartItemOptions()
             {
                 String article = "";
                 String item1 = "";
@@ -34,17 +34,22 @@ namespace string_exercises
                         break;
                     case "Warrior":
                         item1 = "Axe";
-                        choice
+                        choiceKey1 = "(A)";
                         item2 = "Sword";
+                        choiceKey2 = "(S)";
                         article = "An";
                         break;
                     case "Thief":
                         item1 = "Bow";
+                        choiceKey1 = "(B)";
                         item2 = "Dagger";
+                        choiceKey2 = "(D)";
                         article = "A";
                         break;
+                    default:
+                        break;
                 }
-                return (item1, item2, article);
+                return (item1, choiceKey1, item2, choiceKey2, article);
             }
             String startingItem = "";
             int strength = 0;
@@ -56,6 +61,7 @@ namespace string_exercises
             String askLastName = "Thank you, now please choose your character's lastname...\n(type their lastname, then press ENTER)";
             String askNickName = "And finally, what is your character's nickname...\n(type their nickname, then press ENTER)";
             String rejectEmptyInput = "You can't leave this blank. Please choose something and press ENTER";
+            String rejectIncorrectSelection = "You have to choose trom one of the options given.\nPlease choose by typing one of the options given, then press ENTER";
             string welcomeMessage()
             {
                 return "Welcome, " + fullName + "!";
@@ -70,9 +76,23 @@ namespace string_exercises
             {
                 return "You have chosen to play the " + characterClass + " class.";
             }
+            string AnnounceStartingItem()
+            {
+                if(startingItem == "Axe")
+                {
+                    return "You have chosen to start your adventure with an " + startingItem + " equipped.";
+                }
+                else
+                {
+                    return "You have chosen to start your adventure with a " + startingItem + " equipped.";
+                }
+            }
             string askStartingItem()
             {
-                return "Choose your starting item.\nWould you like " + StartItemOptions(characterClass).article + " " + StartItemOptions(characterClass).option1 + " or "
+                return "Choose your starting item.\nWould you like " 
+                + StartItemOptions().article + " " + StartItemOptions().option1 + " " + StartItemOptions().choiceKey1 + 
+                " or a " + StartItemOptions().option2 + " " + StartItemOptions().choiceKey2 + 
+                " ?\nMake your choice by typing " + StartItemOptions().choiceKey1 + " or " + StartItemOptions().choiceKey2 + " and pressing ENTER";
             }
 
             Random random = new Random();
@@ -188,10 +208,93 @@ namespace string_exercises
                 return returnChosenClass;
             }
 
+            Boolean CheckStartingItemChoice(string choice)
+            {
+                String playerchoice = choice;
+                switch(characterClass)
+                {
+                    case "Mage":
+                        switch(playerchoice.ToLower())
+                        {
+                            case "s":
+                                return true;
+                            case "b":
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case "Warrior":
+                        switch(playerchoice.ToLower())
+                        {
+                            case "a":
+                                return true;
+                            case "s":
+                                return true;
+                            default:
+                                return false;
+                        }
+                    case "Thief":
+                        switch(playerchoice.ToLower())
+                        {
+                            case "b":
+                                return true;
+                            case "d":
+                                return true;
+                            default:
+                                return false;
+                        }
+                    default:
+                        return false;
+                }
+            }
+
             string CollectStartingItemChoice()
             {
                 String validChoice = "";
                 String playerInput = SanitizedPlayerInput(CollectPlayerInput(askStartingItem()));
+                while(CheckStartingItemChoice(playerInput) == false)
+                {
+                    playerInput = SanitizedPlayerInput(CollectPlayerInput(rejectIncorrectSelection));
+                }
+                switch(characterClass)
+                {
+                    case "Mage":
+                        switch(playerInput.ToLower())
+                        {
+                            case "s":
+                                validChoice = "Staff";
+                                break;
+                            case "b":
+                                validChoice = "Spellbook";
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case "Warrior":
+                        switch(playerInput.ToLower())
+                        {
+                            case "a":
+                                validChoice = "Axe";
+                                break;
+                            case "s":
+                                validChoice = "Sword";
+                                break;
+                        }
+                        break;
+                    case "Thief":
+                        switch(playerInput.ToLower())
+                        {
+                            case "b":
+                                validChoice = "Bow";
+                                break;
+                            case "d":
+                                validChoice = "Dagger";
+                                break;
+                        }
+                        break;
+
+                }
                 return validChoice;
             }
            
@@ -219,6 +322,11 @@ namespace string_exercises
             characterClass = CollectClassChoice();
 
             AskPlayer(announceclassChoice());
+
+            startingItem = CollectStartingItemChoice();
+
+            AskPlayer(AnnounceStartingItem());
+
 
         }
     }
