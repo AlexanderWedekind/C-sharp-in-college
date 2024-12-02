@@ -3,5 +3,7 @@
 **/net8.0/**
 **/bin/
 **/obj/
-**/net8.0/
+**obj/Debug/net8.0/
+**Do they retire/obj/Debug/net8.0/**
 
+*.AssemblyInfo.cs
