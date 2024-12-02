@@ -1,9 +1,7 @@
-bin/
-bin/Debug/
-bin/Debug/net8.0
-Debug/
-net8.0/
-obj/
-.cache
-.editorconfig
-.AssemblyInfo.cs
+**/bin/** 
+**/obj/**
+**/net8.0/**
+**/bin/
+**/obj/
+**/net8.0/
+
