@@ -172,7 +172,7 @@ class Program
 
             PrintResults(table);
 
-            MessagePlayer(message.newLine + message.goodbye);
+            MessagePlayer(message.newLine + message.goodbye + message.newLine);
         }
 
         
