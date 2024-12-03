@@ -1,7 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Security.Cryptography.X509Certificates;
 
-namespace menu
+namespace Menu
 {
     class Program
     {
@@ -12,7 +12,7 @@ namespace menu
             public string newLine = "\n";
             public string rejectNotAMenuChoice = "Please pick one of the options on the menu";
             public string typeAndEnter = "(choose by typing a number, then press ENTER)";
-            public string rejectNotNumber = "That wasn't a valid choice; pick an option by using the number keys";
+            public string rejectNotNumber = "That wasn't a valid choice; pick an option by using the NUMBER keys";
             public string menu = "Options:\n"
             + "1) Times Table Generator\n"
             + "2) Orc v Dwarf Battle\n"
@@ -34,19 +34,7 @@ namespace menu
                 return Console.ReadLine();
             }
 
-            // public void Menu()
-            // {
-            //     do
-            //     {
-            //         string userInput = CollectUserInput(message.helloThere + message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
-            //         switch(userInput)
-            //         {
-            //             case "1":
-
-            //         }
-            //     }
-            // }
-
+            
             (bool isNum, bool isValidChoice) CheckMenuChoice(string userInput, int[] menuRange)
             {
                 bool isNum = false;
@@ -68,13 +56,37 @@ namespace menu
             public int CollectMenuChoice()
             {
                 int[] menuRange = [1, 2, 3, 4];
-                string userInput = CollectUserInput(message.helloThere + message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
+                string userInput = CollectUserInput(message.helloThere + message.newLine + message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
                 while(CheckMenuChoice(userInput, menuRange).isNum == false || CheckMenuChoice(userInput, menuRange).isValidChoice == false)
                 {
                     if(CheckMenuChoice(userInput, menuRange).isNum == false)
-                    userInput = CollectUserInput()
+                    {
+                        userInput = CollectUserInput(message.rejectNotNumber);
+                    }else{
+                        userInput = CollectUserInput(message.rejectNotAMenuChoice + message.newLine + message.typeAndEnter);
+                    }
+                }
+                return int.Parse(userInput);
+            }
+            
+            public static void Exit()
+            {
+                Environment.Exit();
+            }
+
+            public void Menu()
+            {
+                
+                {
+                    string userInput = CollectUserInput(message.helloThere + message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
+                    switch(userInput)
+                    {
+                        case "1":
+
+                    }
                 }
             }
+
 
             public void SayHelloThere()
             {
@@ -88,7 +100,7 @@ namespace menu
 
             MenuMethods method = new MenuMethods();
 
-            method.SayHelloThere();
+            
 
 
         }
