@@ -3,7 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
-    public class Messages()
+    public class Messages
     {
         public string newLine = "\n";
         public string welcome = "Hello there!\nWelcome to:\nTimes Tables Generator 9001 (c)\n\nYou can use this tool to generate times tables, withing a range of your choosing.";
