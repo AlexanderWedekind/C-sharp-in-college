@@ -16,8 +16,9 @@ namespace Menu
             public string menu = "Options:\n"
             + "1) Times Table Generator\n"
             + "2) Orc v Dwarf Battle\n"
-            + "3) Magical Medieval Adventure"
+            + "3) Magical Medieval Adventure\n"
             + "4) Quit";
+            public string goodBye = "Thank you. See you next time.";
         }
 
         public class MenuMethods
@@ -56,33 +57,49 @@ namespace Menu
             public int CollectMenuChoice()
             {
                 int[] menuRange = [1, 2, 3, 4];
-                string userInput = CollectUserInput(message.helloThere + message.newLine + message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
+                string userInput = CollectUserInput(message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
                 while(CheckMenuChoice(userInput, menuRange).isNum == false || CheckMenuChoice(userInput, menuRange).isValidChoice == false)
                 {
                     if(CheckMenuChoice(userInput, menuRange).isNum == false)
                     {
                         userInput = CollectUserInput(message.rejectNotNumber);
-                    }else{
+                    }
+                    else
+                    {
                         userInput = CollectUserInput(message.rejectNotAMenuChoice + message.newLine + message.typeAndEnter);
                     }
                 }
                 return int.Parse(userInput);
             }
             
-            public static void Exit()
+            public void Exit()
             {
-                Environment.Exit();
+                MessageUser(message.goodBye);
+                Environment.Exit(0);
             }
 
             public void Menu()
             {
-                
+                bool session = true;
+                int menuChoice = 0;
+                while(session)
                 {
-                    string userInput = CollectUserInput(message.helloThere + message.welcome + message.newLine + message.menu + message.newLine + message.typeAndEnter);
-                    switch(userInput)
+                    MessageUser(message.helloThere);
+                    menuChoice = CollectMenuChoice();
+                    switch(menuChoice)
                     {
-                        case "1":
-
+                        case 1:
+                            Console.WriteLine("menu choice 1 : Times Table Generator");
+                            break;
+                        case 2:
+                            Console.WriteLine("menu choice 2 : Orc v Dwarf Battle");
+                            break;
+                        case 3:
+                            Console.WriteLine("menu choice 3 : Magical Medieval Adventure");
+                            break;
+                        case 4:
+                            Exit();
+                            break;
                     }
                 }
             }
@@ -100,7 +117,7 @@ namespace Menu
 
             MenuMethods method = new MenuMethods();
 
-            
+            method.Menu();
 
 
         }
