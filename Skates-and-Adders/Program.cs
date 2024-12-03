@@ -26,6 +26,11 @@ class Program
         public string thanks = "Thank you.";
         public string announceResults = "Here are the results:";
         public string goodbye = "Thank you for using Times Tables Generator 9001 (c)";
+        public string rejctNegativeAge = "Your age is not negative; please choose a positive number, then press ENTER.";
+        public string announceAgeVerification = "This app requires age verification.";
+        public string askAge = "Please enter your age.";
+        public string denyAccessAge = "Based on your age, we determine that this app is too exciting for you.\nUnfortunately you won't be able to play.\nGoodbye.";
+        public string announcePassAgeCheck = "We think you can handle the excitement.";
     }
 
     
@@ -38,6 +43,9 @@ class Program
         int startNumber = 0;
         int endNumber = 0;
         string[] table;
+        int playerAge = 0;
+        string age = "Age";
+        string number = "Number";
 
         void MessagePlayer(string message)
         {
@@ -67,7 +75,7 @@ class Program
             }
         }
 
-        int SanitizedNumberChoice(string userInput)
+        int SanitizedNumberChoice(string userInput, string ageOrNumber)
         {
             string toBeConverted = userInput;
             int convertedInput = 0;
@@ -77,12 +85,28 @@ class Program
                 {
                     toBeConverted = CollectPlayerInput(message.newLine + message.rejectInvalidChoice);
                 }else{
-                    toBeConverted = CollectPlayerInput(message.positiveTodayPlease + message.newLine + message.typeAndEnter);
+                    if(ageOrNumber =="Number")
+                    {
+                        toBeConverted = CollectPlayerInput(message.positiveTodayPlease + message.newLine + message.typeAndEnter);
+                    }else{
+                        toBeConverted = CollectPlayerInput(message.rejctNegativeAge);
+                    }
                 }
             }
             convertedInput = int.Parse(toBeConverted);
             MessagePlayer(message.newLine + message.thanks);
             return convertedInput;
+        }
+
+        bool verifyAge(int playerAge)
+        {
+            if(playerAge < 18 || playerAge > 65)
+            {
+                MessagePlayer(message.denyAccessAge);
+                return false;
+            }
+            MessagePlayer(message.announcePassAgeCheck);
+            return true;
         }
 
         string[] GenerateTimesTables(int number, int startNumber, int endNumber)
@@ -111,27 +135,34 @@ class Program
             }
         }
 
+
+
         
+        MessagePlayer(message.newLine + message.announceAgeVerification);
 
+        if(verifyAge(SanitizedNumberChoice(CollectPlayerInput(message. newLine + message.askAge), age)))
+        {
+            MessagePlayer(message.newLine + message.welcome);
 
-        MessagePlayer(message.newLine + message.welcome);
+            chosenForTimesTables = SanitizedNumberChoice(CollectPlayerInput(message.newLine + message.askForNumber + message.newLine + message.typeAndEnter), number);
 
-        chosenForTimesTables = SanitizedNumberChoice(CollectPlayerInput(message.newLine + message.askForNumber + message.newLine + message.typeAndEnter));
+            MessagePlayer(message.thanksForChoosingNumber(chosenForTimesTables));
 
-        MessagePlayer(message.thanksForChoosingNumber(chosenForTimesTables));
+            MessagePlayer(message.newLine + message.explainRangeChoice(chosenForTimesTables));
 
-        MessagePlayer(message.newLine + message.explainRangeChoice(chosenForTimesTables));
+            startNumber = SanitizedNumberChoice(CollectPlayerInput(message.askStartNumber), number);
 
-        startNumber = SanitizedNumberChoice(CollectPlayerInput(message.askStartNumber));
+            endNumber = SanitizedNumberChoice(CollectPlayerInput(message.askForEndNumber), number);
 
-        endNumber = SanitizedNumberChoice(CollectPlayerInput(message.askForEndNumber));
+            table = GenerateTimesTables(chosenForTimesTables, startNumber, endNumber);
 
-        table = GenerateTimesTables(chosenForTimesTables, startNumber, endNumber);
+            MessagePlayer(message.newLine + message.announceResults + message.newLine);
 
-        MessagePlayer(message.newLine + message.announceResults + message.newLine);
+            PrintResults(table);
 
-        PrintResults(table);
+            MessagePlayer(message.newLine + message.goodbye);
+        }
 
-        MessagePlayer(message.newLine + message.goodbye);
+        
     }
 }
