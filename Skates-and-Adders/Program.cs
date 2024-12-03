@@ -57,7 +57,11 @@ class Program
             MessagePlayer(message);
             return Console.ReadLine();
         }
-
+        /// <summary>
+        /// assesses if a user input string can be parsed into int, and if
+        /// </summary>
+        /// <param name="convertMe">user chosen number. this will be a string</param>
+        /// <returns>struct: (bool convertible, bool aboveZero)</returns>
         (bool convertible, bool aboveZero) testInput(string convertMe)
         {
             Boolean convertible = false;
@@ -108,7 +112,15 @@ class Program
             MessagePlayer(message.announcePassAgeCheck);
             return true;
         }
-
+        /// <summary>
+        /// will return and array of strings. Each array element contain a row in a times table, eg.: ["4 x 3 = 12", "4 x 4 = 16", ... ].
+        /// Times Tables is generated bases on user-chosen parameters: Number to be multiplied; Range by choosing a starting number and an end number, 
+        /// eg.: number = 4; startNumber = 3; endNumber = 7; return = ["4 x 3 = 12", ... , "4 x 7 = 28"] 
+        /// </summary>
+        /// <param name="number">the number the player has chose to be multiplied</param>
+        /// <param name="startNumber">user chosen start number</param>
+        /// <param name="endNumber">user chosen end number</param>
+        /// <returns>Table</returns>
         string[] GenerateTimesTables(int number, int startNumber, int endNumber)
         {
             int numberOfLines = endNumber - startNumber + 1;
