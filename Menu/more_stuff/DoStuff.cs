@@ -1,5 +1,7 @@
 using MyMenuMessages;
 using MyRetirementChecker;
+using MyOrcVHuman;
+using MyTimesTableGenerator;
 
 namespace MyMenuMethods
 {
@@ -72,16 +74,17 @@ namespace MyMenuMethods
                     {
                         case 1:
                             Console.WriteLine("menu choice 1 : Times Table Generator");
+                            TimesTableGenerator.RunTimesTableGenerator();
                             break;
                         case 2:
                             Console.WriteLine("menu choice 2 : Orc v Dwarf Battle");
+                            OrcVHuman.RunOrcVHuman();
                             break;
                         case 3:
                             Console.WriteLine("menu choice 3 : Magical Medieval Adventure");
                             break;
                         case 4:
                             Console.WriteLine("menu choice 4 : Retirement Checker");
-
                             RetirementChecker.RunRetirementChecker();
                             break;
                         case 5:
