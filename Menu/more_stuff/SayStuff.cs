@@ -3,7 +3,7 @@ namespace MyMenuMessages
     public class MenuMessages
         {
             public string helloThere = "Hello there!";
-            public string welcome = "Choose what you want to do";
+            public string makeAChoice = "Choose what you want to do";
             public string newLine = "\n";
             public string rejectNotAMenuChoice = "Please pick one of the options on the menu";
             public string typeAndEnter = "(choose by typing a number, then press ENTER)";
@@ -15,5 +15,6 @@ namespace MyMenuMessages
             + "4) Retirement Checker\n"
             + "5) Quit";
             public string goodBye = "Thank you. See you next time.";
+            public string backAtMenu = "You are back at the main menu.";
         }
 }
