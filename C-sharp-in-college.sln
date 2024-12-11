@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Do they retire", "Do they r
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "string-exercises", "string-exercises\string-exercises.csproj", "{E3E90B8B-CC68-40F6-AB35-87B216B98AD0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dungeon-Crawler", "Dungeon-Crawler\Dungeon-Crawler.csproj", "{CECA3AF6-D860-4A5C-A5DE-AB7B54BDF4D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

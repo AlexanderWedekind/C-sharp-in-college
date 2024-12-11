@@ -4,12 +4,13 @@ namespace MyNewRoom
 
     public class Room
     {
-        DungeonCrawlerMethods method = new DungeonCrawlerMethods();
+        //DungeonCrawlerMethods method = new DungeonCrawlerMethods();
         public int num = 0;
+        public int randomRoomEvent = 0;
 
         public Room()
         {
-            int randomRoomEvent = method.random.Next(1, 6);
+            randomRoomEvent = method.random.Next(1, 6);
             switch(randomRoomEvent)
             {
                 case 1:

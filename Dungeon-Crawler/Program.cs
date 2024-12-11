@@ -1,6 +1,6 @@
 ﻿using MyDungeonCrawlerMethods;
 using MyNewRoom;
-using MyNewPlayer;
+using MyPlayer;
 
 namespace MyDungeonCrawler
 {
@@ -9,7 +9,8 @@ namespace MyDungeonCrawler
         
         public static void Main()
         {
-            DungeonCrawlerMethods method = new DungeonCrawlerMethods();
+            Player currentPlayer = new Player();
+           
             Room newRoom = new Room();
             Console.WriteLine(newRoom.num);
         }
