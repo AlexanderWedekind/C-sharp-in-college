@@ -1,26 +1,39 @@
 namespace MyNewRoom
 {
+    using System.Security.Cryptography.X509Certificates;
     using MyDungeonCrawlerMethods;
+    using MyPlayer;
 
     public class Room
     {
         //DungeonCrawlerMethods method = new DungeonCrawlerMethods();
-        public int num = 0;
-        public int randomRoomEvent = 0;
+        public  static int number = 0;
+        public delegate void ThisRoomEvent();
+        public static ThisRoomEvent RoomEvent;
+        
 
-        public Room()
+
+        public Room(ThisRoomEvent roomEvent1, ThisRoomEvent roomEvent2, ThisRoomEvent roomEvent3, ThisRoomEvent roomEvent4, ThisRoomEvent roomEvent5)
         {
-            randomRoomEvent = method.random.Next(1, 6);
-            switch(randomRoomEvent)
+            number = method.random.Next(1, 6);
+            switch(number)
             {
                 case 1:
-                    num = method.OneD6();
+                    RoomEvent = roomEvent1;
                     break;
                 case 2:
-                    num = method.DiceRoll(7);
+                    RoomEvent = roomEvent2;
+                    break;
+                case 3:
+                    RoomEvent = roomEvent3;
+                    break;
+                case 4:
+                    RoomEvent = roomEvent4;
+                    break;
+                case 5:
+                    RoomEvent = roomEvent5;
                     break;
                 default:
-                    num = 0;
                     break;
             }
 

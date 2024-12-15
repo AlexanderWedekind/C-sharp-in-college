@@ -13,7 +13,7 @@ namespace MyPlayer
         public static int healingPotion = 0;
         public static int attackDamage(int dice)
         {
-            return method.DiceRoll(dice);
+            return method.DiceRoll(dice) + attack;
         }
         
         public static int attack = 0;
