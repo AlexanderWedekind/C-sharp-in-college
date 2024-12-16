@@ -7,13 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Do they retire", "Do they r
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "string-exercises", "string-exercises\string-exercises.csproj", "{E3E90B8B-CC68-40F6-AB35-87B216B98AD0}"
 EndProject
-<<<<<<< HEAD
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menu", "Menu\Menu.csproj", "{44351F69-1E87-44B7-A000-223654881B63}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Crawler", "Dungeon-Crawler\Dungeon-Crawler.csproj", "{4EAD2E70-B3E8-434E-9068-D998CBCBB858}"
-=======
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dungeon-Crawler", "Dungeon-Crawler\Dungeon-Crawler.csproj", "{CECA3AF6-D860-4A5C-A5DE-AB7B54BDF4D7}"
->>>>>>> bfc2b07451c82bbb30c98bb7fe3ae3175dd597d6
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
