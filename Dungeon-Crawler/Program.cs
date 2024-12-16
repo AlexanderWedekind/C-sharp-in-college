@@ -1,6 +1,8 @@
-﻿using MyDungeonCrawlerMethods;
+﻿using MyDungeonCrawlerMessages;
+using MyDungeonCrawlerMethods;
+using MyMonster;
 using MyNewRoom;
-using MyNewPlayer;
+using MyPlayer;
 
 namespace MyDungeonCrawler
 {
@@ -9,9 +11,17 @@ namespace MyDungeonCrawler
         
         public static void Main()
         {
-            DungeonCrawlerMethods method = new DungeonCrawlerMethods();
-            Room newRoom = new Room();
-            Console.WriteLine(newRoom.num);
+            Player currentPlayer = new Player();
+           
+            Room newRoom = method.CreateNewRoom();
+            
+            Monster newMonster = new Monster();
+
+            Console.WriteLine("monster name : \" " + Monster.name + " \"");
+            method.MessagePlayer(method.GenerateStatsDisplay());
+
+            string emptyString = "";
+            method.MessagePlayer("$ cd ../");
         }
     }
 }
