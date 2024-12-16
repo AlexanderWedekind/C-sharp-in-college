@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Do they retire", "Do they r
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "string-exercises", "string-exercises\string-exercises.csproj", "{E3E90B8B-CC68-40F6-AB35-87B216B98AD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Menu", "Menu\Menu.csproj", "{44351F69-1E87-44B7-A000-223654881B63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dungeon-Crawler", "Dungeon-Crawler\Dungeon-Crawler.csproj", "{4EAD2E70-B3E8-434E-9068-D998CBCBB858}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{E3E90B8B-CC68-40F6-AB35-87B216B98AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3E90B8B-CC68-40F6-AB35-87B216B98AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3E90B8B-CC68-40F6-AB35-87B216B98AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44351F69-1E87-44B7-A000-223654881B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44351F69-1E87-44B7-A000-223654881B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44351F69-1E87-44B7-A000-223654881B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44351F69-1E87-44B7-A000-223654881B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EAD2E70-B3E8-434E-9068-D998CBCBB858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EAD2E70-B3E8-434E-9068-D998CBCBB858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EAD2E70-B3E8-434E-9068-D998CBCBB858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EAD2E70-B3E8-434E-9068-D998CBCBB858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
