@@ -15,6 +15,7 @@ namespace MyPlayer
         {
             return method.DiceRoll(dice) + attack;
         }
+        public static string name = "";
         
         public static int attack = 0;
         public static int defence = 0;

@@ -20,8 +20,11 @@ namespace MyDungeonCrawler
             Console.WriteLine("monster name : \" " + Monster.name + " \"");
             method.MessagePlayer(method.GenerateStatsDisplay());
 
-            string emptyString = "";
-            method.MessagePlayer("$ cd ../");
+            method.GenerateStatsDisplay();
+            Console.WriteLine(method.CleanedInput("           hello              world []{}()-+=/\\.;:,9876ynYN"));
+            Console.WriteLine(method.AcceptOnlyNumbers(method.CleanedInput("           hello              world []{}()-+=/\\.;:,9876ynYN")));
+            Console.WriteLine(method.AcceptOnlyYorN(method.CleanedInput("           hello              world []{}()-+=/\\.;:,9876ynYN")));
+            Console.Write(method.RemoveDoubleWhitespaces(method.AcceptOnlyLetters("           hello              world []{}()-+=/\\.;:,9876ynYN")).Trim());
         }
     }
 }

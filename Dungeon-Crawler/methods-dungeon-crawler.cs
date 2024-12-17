@@ -3,6 +3,7 @@ using MyMonster;
 using MyNewRoom;
 using MyPlayer;
 using MyDungeonCrawlerMessages;
+using System.Text.RegularExpressions;
 
 namespace MyDungeonCrawlerMethods
 {
@@ -23,16 +24,102 @@ namespace MyDungeonCrawlerMethods
             return Console.ReadLine();
         }
 
+        public static bool GotDetected()
+        {
+            bool noticed = false;
+            int noise = DiceRoll(2);
+            int heard = DiceRoll(2);
+            if(noise > heard)
+            {
+                noticed = true;
+            }
+            return noticed;
+        }
+
+        public static string AcceptOnlyLetters(string input)
+        {
+            return Regex.Replace(input, @"[^a-zA-Z]", " ");
+        }        
+
         public static string CleanedInput(string input)
         {
-            return input.Replace(" ", "").Replace("/", "").Replace("-", "").Replace("\\", "").Replace(":", "").Substring(0, 10);
+            return Regex.Replace(input, @"[\[\]\.\\/\s\(\)\{\}=\+\-,:;]", " ");
+            //return Regex.Replace(input, @"[^[:alnum:]]", "");
+        }
+
+        public static (bool isNum, bool isValidSelection) TestNumInput(string input, int numberOfChoices)
+        {
+            bool isNum = false;
+            bool isValidSelection = false;
+            if(Int32.TryParse(input, out int number))
+            {
+                isNum = true;
+                if(0 < number && number < numberOfChoices + 1)
+                {
+                    isValidSelection = true;
+                }
+            }
+            return (isNum, isValidSelection);
+        }
+
+        public static string AcceptOnlyNumbers(string input)
+        {
+            return Regex.Replace(input.Trim(), @"[^0-9]", " ");
+        }
+
+        public static string AcceptOnlyYorN(string input)
+        {
+            return Regex.Replace(input.Trim(), @"[^ynYN]", " ").ToLower();
+        }
+
+        public static string RemoveDoubleWhitespaces(string input)
+        {
+            return Regex.Replace(input, @"(\s+)", " ");
+        }
+
+        public static string CollectPlayerName()
+        {
+            string input = RemoveDoubleWhitespaces(AcceptOnlyLetters(CollectPlayerInput(message.askName + message.chosePlusEnter))).Trim();
+            while(String.IsNullOrEmpty(input) == true || String.IsNullOrWhiteSpace(input) == true)
+            {
+                input = RemoveDoubleWhitespaces(AcceptOnlyLetters(CollectPlayerInput(message.rejectInvalidName))).Trim();
+            }
+            if(input.Length > 14)
+            {
+                input = input.Substring(0, 14);
+            }
+            return input;
+        }
+
+        public static int CollectMenuSelection(int numberOfChoices)
+        {
+            string input = RemoveDoubleWhitespaces(AcceptOnlyNumbers(CollectPlayerInput(message.askMenuChoice + message.chosePlusEnter))).Trim();
+            while(TestNumInput(input, numberOfChoices).isNum == false || TestNumInput(input, numberOfChoices).isValidSelection == false)
+            {
+                input = RemoveDoubleWhitespaces(AcceptOnlyNumbers(CollectPlayerInput(message.rejectInvalidMenuChoice + message.chosePlusEnter))).Trim();
+            }
+            return Int32.Parse(input);
+        }
+
+        public static string collectYorNselection()
+        {
+            string input = RemoveDoubleWhitespaces(AcceptOnlyYorN(CollectPlayerInput(message.askYesOrNo + message.chosePlusEnter))).Trim();
+            while(String.IsNullOrEmpty(input) == true || String.IsNullOrWhiteSpace(input) == true)
+            {
+                input = RemoveDoubleWhitespaces(AcceptOnlyYorN(CollectPlayerInput(message.rejectInvalidYesOrNo + message.chosePlusEnter))).Trim();
+            }
+            return input.Substring(0, 1);
         }
 
         
 
         public static string GenerateStatsDisplay()
         {
-            return "________\n|       |\n_______";
+            //  |+-----------------------------------------
+            //  |         cedric the swine herd            |
+            //  |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-|
+            //  | health: 25 | potion: 2 | attack: 2 | defence: 2 | gold: 100 |
+            return " ----------\n|          |\n ----------";
         }
 
         public static int OneD6()
@@ -248,7 +335,7 @@ namespace MyDungeonCrawlerMethods
         {
 
         }
-        public static void NewRoomOrQuitMeny()
+        public static void NewRoomOrQuitMenu()
         {
             
         }
@@ -264,17 +351,21 @@ namespace MyDungeonCrawlerMethods
             {
                 if(isFirstRoom == true)
                 {
-
+                    MessagePlayer(message.goodLuck());
                 }
                 else
                 {
-                    
+
                 }
             }
             while(numberOfRooms > 0);
         }
         public static void Game()
         {
+            MessagePlayer(message.welcome);
+            Player player = new Player();
+            Player.name = CollectPlayerName();
+            
 
         }
 
