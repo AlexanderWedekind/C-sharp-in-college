@@ -11,6 +11,21 @@ namespace MyDungeonCrawler
         
         public static void Main()
         {
+            bool play = false;
+            do
+            {
+                method.Game();
+                method.MessagePlayer(message. newLine + message.playAgain);
+                string playAgain = method.collectYorNselection();
+                if(playAgain == "y")
+                {
+                    play = true;
+                }
+            }
+            while(play == true);
+            Environment.Exit(1);
+            
+
             Player currentPlayer = new Player();
            
             Room newRoom = method.CreateNewRoom();

@@ -37,6 +37,7 @@ namespace MyDungeonCrawlerMessages
             return "As soon as " + Monster.name + " lays eyes on you, they immediately attack!";
         }
         public static string sneakSuccess = "You sneak past without getting noticed.";
+        public static string proceed = "With trepidation ou proceed to the next room...";
         public static string foundGold(int gold)
         {
             return lucky + " You have found " + gold + " gold!";
@@ -82,7 +83,25 @@ namespace MyDungeonCrawlerMessages
         public static string goodLuck()
         {
             return "\"Good luck on your adventure " + Player.name + "!\" the old hag shouts, with a sinister grin, as you enter the first room...";
-        } 
+        }
+        public static string askNextRoom = "Do you want to progress to the next room, or do you want to return to the surface?e\nContinue your quest?";
+        public static string death()
+        {
+            return "You perish from your injuries...\nAs you lie dead and forgotten in the accursed dungeon, the monsters loot all or your " + Player.gold + " coins.";
+        }
+        public static string exit = "Assessing your chances and fortune, you decide to end your quest and ascend back to the world of the living.";
+        public static string backstab()
+        {
+            return "As you breathe in the fresh air deeply and close your eyes for a moment, feeling gratefull to have survived this ordeal,\n"
+                    + "the old hag steps out from behind a rock and stabs you in the back, killing you instantly.\n"
+                    + "As she loots your treasure, she cackles to herself: \"Ha! This one has brought me " + Player.gold + " coins!\nA good haul, can't wait for the next one tomorrow.\"";
+        }
+        public static string victory()
+        {
+            return "You conquered all the rooms in the dungeon with " + Player.healingPotion + " potions and " + Player.health + " health left!"
+                    + "Relieved to be alive, you make your way back to the surface.";
+        }
+        public static string playAgain = "Do you want to play again?";
 
     }
 }

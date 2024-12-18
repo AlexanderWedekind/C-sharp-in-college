@@ -11,7 +11,12 @@ namespace MyDungeonCrawlerMethods
     {
         public static Random random = new Random();
 
-        
+        struct Cause
+        {
+            public static string death = "death";
+            public static string exit = "exit";
+            public static string victory = "victory";
+        }
 
         public static void MessagePlayer(string message)
         {
@@ -79,7 +84,7 @@ namespace MyDungeonCrawlerMethods
 
         public static string CollectPlayerName()
         {
-            string input = RemoveDoubleWhitespaces(AcceptOnlyLetters(CollectPlayerInput(message.askName + message.chosePlusEnter))).Trim();
+            string input = RemoveDoubleWhitespaces(AcceptOnlyLetters(CollectPlayerInput(message.askName + message.newLine + message.chosePlusEnter))).Trim();
             while(String.IsNullOrEmpty(input) == true || String.IsNullOrWhiteSpace(input) == true)
             {
                 input = RemoveDoubleWhitespaces(AcceptOnlyLetters(CollectPlayerInput(message.rejectInvalidName))).Trim();
@@ -93,20 +98,20 @@ namespace MyDungeonCrawlerMethods
 
         public static int CollectMenuSelection(int numberOfChoices)
         {
-            string input = RemoveDoubleWhitespaces(AcceptOnlyNumbers(CollectPlayerInput(message.askMenuChoice + message.chosePlusEnter))).Trim();
+            string input = RemoveDoubleWhitespaces(AcceptOnlyNumbers(CollectPlayerInput(message.askMenuChoice + message.newLine + message.chosePlusEnter))).Trim();
             while(TestNumInput(input, numberOfChoices).isNum == false || TestNumInput(input, numberOfChoices).isValidSelection == false)
             {
-                input = RemoveDoubleWhitespaces(AcceptOnlyNumbers(CollectPlayerInput(message.rejectInvalidMenuChoice + message.chosePlusEnter))).Trim();
+                input = RemoveDoubleWhitespaces(AcceptOnlyNumbers(CollectPlayerInput(message.rejectInvalidMenuChoice + message.newLine + message.chosePlusEnter))).Trim();
             }
             return Int32.Parse(input);
         }
 
         public static string collectYorNselection()
         {
-            string input = RemoveDoubleWhitespaces(AcceptOnlyYorN(CollectPlayerInput(message.askYesOrNo + message.chosePlusEnter))).Trim();
+            string input = RemoveDoubleWhitespaces(AcceptOnlyYorN(CollectPlayerInput(message.askYesOrNo + message.newLine + message.chosePlusEnter))).Trim();
             while(String.IsNullOrEmpty(input) == true || String.IsNullOrWhiteSpace(input) == true)
             {
-                input = RemoveDoubleWhitespaces(AcceptOnlyYorN(CollectPlayerInput(message.rejectInvalidYesOrNo + message.chosePlusEnter))).Trim();
+                input = RemoveDoubleWhitespaces(AcceptOnlyYorN(CollectPlayerInput(message.rejectInvalidYesOrNo + message.newLine + message.chosePlusEnter))).Trim();
             }
             return input.Substring(0, 1);
         }
@@ -323,25 +328,54 @@ namespace MyDungeonCrawlerMethods
             return randomMonsterName;
         }
 
-        public static void CarryOnOrQuitMenu()
+        public static void PlayAgainMenu()
         {
-
+            
         }
-        public static void FinishGame()
+        public static void AssessPlayerHealth()
         {
-
+            if(Player.health < 1)
+            {
+                FinishGame(Cause.death);
+            }
         }
+        public static void FinishGame(string cause)
+        {
+            switch(cause)
+            {
+                case "death":
+                    MessagePlayer(message.death());
+                    return;
+                case "exit":
+                    MessagePlayer(message.exit + message.newLine + message.backstab());
+                    return;
+                case "victory":
+                    MessagePlayer(message.victory() + message.newLine + message.backstab());
+                    return;
+                default:
+                    return;
+            }
+        }
+
         public static void BattleMenu()
         {
 
         }
         public static void NewRoomOrQuitMenu()
         {
-            
+            MessagePlayer(message.askNextRoom);
+            string choice = collectYorNselection();
+            if(choice == "n")
+            {
+                FinishGame(Cause.exit);
+            }
         }
         public static void DoCurrentRoom()
         {
-
+            Room currentRoom = CreateNewRoom();
+            Room.RoomEvent();
+            AssessPlayerHealth();
+            NewRoomOrQuitMenu();
         }
         public static void ProceedFromRoomToRoom()
         {
@@ -352,21 +386,26 @@ namespace MyDungeonCrawlerMethods
                 if(isFirstRoom == true)
                 {
                     MessagePlayer(message.goodLuck());
+                    DoCurrentRoom();
+                    isFirstRoom = false;
+                    numberOfRooms -= 1;
                 }
                 else
                 {
-
+                    MessagePlayer(message.proceed);
+                    DoCurrentRoom();
+                    numberOfRooms -= 1;
                 }
             }
             while(numberOfRooms > 0);
+            FinishGame(Cause.victory);
         }
         public static void Game()
         {
             MessagePlayer(message.welcome);
             Player player = new Player();
             Player.name = CollectPlayerName();
-            
-
+            ProceedFromRoomToRoom();
         }
 
         
