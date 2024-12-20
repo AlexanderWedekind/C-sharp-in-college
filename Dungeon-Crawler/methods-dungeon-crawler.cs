@@ -4,6 +4,8 @@ using MyNewRoom;
 using MyPlayer;
 using MyDungeonCrawlerMessages;
 using System.Text.RegularExpressions;
+using MyDungeonCrawler;
+using Gamefinished;
 
 namespace MyDungeonCrawlerMethods
 {
@@ -154,16 +156,32 @@ namespace MyDungeonCrawlerMethods
             return DiceRoll(2) * 100;
         }
 
-        public static int GetCurrentStaticClassFieldValue(Type classType, string fieldName)
+        public static int GetCurrentStaticIntClassFieldValue(Type classType, string fieldName)
         {
-            return Convert.ToInt32(classType.GetField(fieldName));
+            
+            var field = classType.GetField(fieldName);
+            int fieldValue = Convert.ToInt32(field.GetValue(classType));
+            return fieldValue;
         }
 
-        public static void UpdateStaticClassField(Type classType, string fieldName, int valueIncrease)
+        public static string GetCurrentStaticStringClassFieldValue(Type classType, string fieldName)
+        {
+            var field = classType.GetField(fieldName);
+            string fieldValue = Convert.ToString(field.GetValue(classType));
+            return fieldValue;
+        }
+
+        public static void UpdateStaticIntClassField(Type classType, string fieldName, int valueIncrease)
         {
             var staticPlayerField = classType.GetField(fieldName);
-            int currentStaticFieldValue = Convert.ToInt32(classType.GetField(fieldName));
+            int currentStaticFieldValue = Convert.ToInt32(staticPlayerField.GetValue(classType));
             int newValue = currentStaticFieldValue + valueIncrease;
+            staticPlayerField.SetValue(null, newValue);
+        }
+
+        public static void UpdateStaticStringClassField(Type classType, string fieldName, string newValue)
+        {
+            var staticPlayerField = classType.GetField(fieldName);
             staticPlayerField.SetValue(null, newValue);
         }
 
@@ -176,19 +194,19 @@ namespace MyDungeonCrawlerMethods
             {
                 case 1:
                     item = "a weapon";
-                    UpdateStaticClassField(typeof(Player), "attack", 2);
+                    UpdateStaticIntClassField(typeof(Player), "attack", 2);
                     MessagePlayer(message.itemFind(item));
                     MessagePlayer(message.attackUp);
                     break;
                 case 2:
                     item = "a piece of armour";
-                    UpdateStaticClassField(typeof(Player), "defence", 2);
+                    UpdateStaticIntClassField(typeof(Player), "defence", 2);
                     MessagePlayer(message.itemFind(item));
                     MessagePlayer(message.defenceUp);
                     break;
                 case 3:
                     item = "healing potion";
-                    UpdateStaticClassField(typeof(Player), "healingPotion", 1);
+                    UpdateStaticIntClassField(typeof(Player), "healingPotion", 1);
                     MessagePlayer(message.itemFind(item));
                     break;
             }
@@ -196,9 +214,9 @@ namespace MyDungeonCrawlerMethods
 
         public static void HealingFountainEvent()
         {
-            int currentHealthValue = GetCurrentStaticClassFieldValue(typeof(Player), "Health");
+            int currentHealthValue = GetCurrentStaticIntClassFieldValue(typeof(Player), "Health");
             int valueIncrease = Convert.ToInt32(Math.Round(Convert.ToDouble(currentHealthValue) / 2));
-            UpdateStaticClassField(typeof(Player), "health", valueIncrease);
+            UpdateStaticIntClassField(typeof(Player), "health", valueIncrease);
             MessagePlayer(message.newLine + message.healingFountain(valueIncrease));
         }
 
@@ -222,7 +240,7 @@ namespace MyDungeonCrawlerMethods
 
         public static void Battle(bool whoStrikes)
         {
-            while(Monster.health > 0 || Player.health > 0)
+            while(Monster.health > 0 && Player.health > 0)
             {
                 if(whoStrikes == true)
                 {
@@ -235,17 +253,65 @@ namespace MyDungeonCrawlerMethods
                     whoStrikes = true;
                 }
             }
+            if(Monster.health < 1)
+            {
+                int reward = VictoryGoldRewardAmount();
+                UpdateStaticIntClassField(typeof(Player), "gold", reward);
+                MessagePlayer(message.victoryReward(reward));
+            }
+            AssessPlayerHealth();
         }
 
         public static void MonsterEvent()
         {
+            bool whoStrikesFirst = true;
+            Monster monster = new Monster();
+            MessagePlayer(message.MonsterAppears());
+            if(GotDetected() == true)
+            {
+                MessagePlayer(message.MonsterSeesYou());
+                Battle(whoStrikesFirst);
+            }
+            else
+            {
+                MessagePlayer(message.MonsterDidntSeeYou());
+                MessagePlayer(message.SneakOrAttack);
+                if(CollectMenuSelection(2) == 1)
+                {
+                    if(GotDetected() == true)
+                    {
+                        MessagePlayer(message.approachTooNoisy);
+                        MessagePlayer(message.MonsterSeesYou());
+                        Battle(whoStrikesFirst);
+                    }
+                    else
+                    {
+                        MessagePlayer(message.approachSuccessfull());
+                        whoStrikesFirst = false;
+                        Battle(whoStrikesFirst);
+                    }
+                }
+                else
+                {
+                    if(GotDetected() == true)
+                    {
+                        MessagePlayer(message.sneakTooNoisy);
+                        MessagePlayer(message.MonsterSeesYou());
+                        Battle(whoStrikesFirst);
+                    }
+                    else
+                    {
+                        MessagePlayer(message.sneakSuccess);
+                    }
+                }
+            }
 
         }
 
         public static void GoldFindEvent()
         {
             int amount = FoundGoldAmount();
-            UpdateStaticClassField(typeof(Player), "gold", amount);
+            UpdateStaticIntClassField(typeof(Player), "gold", amount);
             MessagePlayer(message.foundGold(amount));
         }
 
@@ -256,8 +322,8 @@ namespace MyDungeonCrawlerMethods
             if(chance > 50)
             {
                 int damage = -1 * DiceRoll(2);
-                UpdateStaticClassField(typeof(Player), "health", damage);
-                MessagePlayer(message.trapDamage(damage));
+                UpdateStaticIntClassField(typeof(Player), "health", damage);
+                MessagePlayer(message.trapDamage(damage * -1));
             }
             else
             {
@@ -328,9 +394,14 @@ namespace MyDungeonCrawlerMethods
             return randomMonsterName;
         }
 
-        public static void PlayAgainMenu()
+        public static bool PlayAgainMenu()
         {
-            
+            method.MessagePlayer(message. newLine + message.playAgain);
+            if(collectYorNselection() == "y")
+            {
+                return true;
+            }
+            return false;
         }
         public static void AssessPlayerHealth()
         {
@@ -355,6 +426,7 @@ namespace MyDungeonCrawlerMethods
                 default:
                     return;
             }
+            throw new GameFinished();
         }
 
         public static void BattleMenu()

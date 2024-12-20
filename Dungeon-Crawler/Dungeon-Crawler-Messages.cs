@@ -29,7 +29,12 @@ namespace MyDungeonCrawlerMessages
         {
             return Monster.name + " is asleep and hasn't noticed you.";
         }
-        public static string SneakOrAttack = "Do you want to attack, or will you attempt to quitly sneak past to get to the next room?";
+        public static string SneakOrAttack = "Do you want to attack, or will you attempt to quitly sneak past to get to the next room?"
+                                            + "\nChoose option (1) Attack, or option (2) Sneak";
+        public static string approachSuccessfull()
+        {
+            return "You quietly approach the sleeping " + Monster.name + " and get the jump on them; you launch the first attack.";
+        }
         public static string approachTooNoisy = "Your approach is too noisy!";
         public static string sneakTooNoisy = "You make too much noise as you try to sneak and you get noticed!";
         public static string MonsterSeesYou()
@@ -37,7 +42,7 @@ namespace MyDungeonCrawlerMessages
             return "As soon as " + Monster.name + " lays eyes on you, they immediately attack!";
         }
         public static string sneakSuccess = "You sneak past without getting noticed.";
-        public static string proceed = "With trepidation ou proceed to the next room...";
+        public static string proceed = "With trepidation you proceed to the next room...";
         public static string foundGold(int gold)
         {
             return lucky + " You have found " + gold + " gold!";
