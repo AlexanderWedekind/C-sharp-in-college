@@ -15,7 +15,7 @@ namespace MyNewRoom
 
         public Room(ThisRoomEvent roomEvent1, ThisRoomEvent roomEvent2, ThisRoomEvent roomEvent3, ThisRoomEvent roomEvent4, ThisRoomEvent roomEvent5)
         {
-            number = method.random.Next(1, 6);
+            number = method.random.Next(1, 8);
             switch(number)
             {
                 case 1:
@@ -31,6 +31,8 @@ namespace MyNewRoom
                     RoomEvent = roomEvent4;
                     break;
                 case 5:
+                case 6:
+                case 7:
                     RoomEvent = roomEvent5;
                     break;
                 default:

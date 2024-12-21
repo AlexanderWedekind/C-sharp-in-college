@@ -23,7 +23,7 @@ namespace MyDungeonCrawlerMessages
         public static string defenceUp = "Your defence increases by 2.";
         public static string MonsterAppears()
         {
-            return "A fearsome monster by the name of " + Monster.name + "occupies this room.";
+            return "A fearsome monster by the name of " + Monster.name + " occupies this room.";
         }
         public static string MonsterDidntSeeYou()
         {
@@ -89,7 +89,7 @@ namespace MyDungeonCrawlerMessages
         {
             return "\"Good luck on your adventure " + Player.name + "!\" the old hag shouts, with a sinister grin, as you enter the first room...";
         }
-        public static string askNextRoom = "Do you want to progress to the next room, or do you want to return to the surface?e\nContinue your quest?";
+        public static string askNextRoom = "Do you want to progress to the next room, or do you want to return to the surface?\nContinue your quest?";
         public static string death()
         {
             return "You perish from your injuries...\nAs you lie dead and forgotten in the accursed dungeon, the monsters loot all or your " + Player.gold + " coins.";
@@ -107,6 +107,36 @@ namespace MyDungeonCrawlerMessages
                     + "Relieved to be alive, you make your way back to the surface.";
         }
         public static string playAgain = "Do you want to play again?";
-
+        public static string battleMenu()
+        {
+            return Monster.name + " has " + Monster.health + " health left.\n"
+                    + "What is your next move? You can pick only one.\n(1) Attack\n(2) Heal (use one potion to heal)\n(3) Flee (chance of escaping unscathed)";
+        }
+        public static string heal(int amount)
+        {
+            return "You consume one potion and it heals you for " + amount + ", bringing you back to " + Player.health + " health.";
+        }
+        public static string noPotions()
+        {
+            return "You fumble in your satchel looking for a potion, but alas you've used them all up!"
+                    + "\nIn the time it takes you to look " + Monster.name + " has started advancing again...";
+        }
+        public static string flee()
+        {
+            return "You are too nimble and fast for " + Monster.name + ", and whilst they give chase, you escape with ease from this room unscathed.";
+        }
+        public static string fleeDamage(int damage)
+        {
+            return "You are fast in making your escape, but " + Monster.name + " is quick and agile,\nand as you flee they get one last strike on you."
+                    + " You receive " + damage + " damage.";
+        }
+        public static string boobyTrap()
+        {
+            return unlucky + newLine + "The treasure chest is booby trapped!";
+        }
+        public static string boobyTrapDamage(int damage)
+        {
+            return "It goes off in your face and you suffer " + damage + " damage. You don't find an item this time.";
+        }
     }
 }

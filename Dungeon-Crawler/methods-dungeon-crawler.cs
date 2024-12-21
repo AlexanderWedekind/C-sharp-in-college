@@ -91,7 +91,7 @@ namespace MyDungeonCrawlerMethods
             {
                 input = RemoveDoubleWhitespaces(AcceptOnlyLetters(CollectPlayerInput(message.rejectInvalidName))).Trim();
             }
-            if(input.Length > 14)
+            if(input.Length > 20)
             {
                 input = input.Substring(0, 20);
             }
@@ -222,7 +222,7 @@ namespace MyDungeonCrawlerMethods
 
             for (int i = 0; i < lines.Length; i+=2)
             {
-                for(int j = 0; j < longestLineLength + 1; j++)
+                for(int j = 0; j < longestLineLength + 2; j++)
                 {
                     if(lines[i].Length == 0)
                     {
@@ -230,7 +230,7 @@ namespace MyDungeonCrawlerMethods
                     }
                     else if(lines[i].Length == longestLineLength + 1)
                     {
-                        lines[i] = lines[i].PadLeft(1);
+                        lines[i] = lines[i].PadLeft(longestLineLength + 2);
                     }
                     else if(i == 4)
                     {
@@ -249,7 +249,15 @@ namespace MyDungeonCrawlerMethods
 
             for(int i = 0; i < lines.Length; i ++)
             {
-                statsDisplay += lines[i] + "\n";
+                if(i == lines.Length - 1)
+                {
+                    statsDisplay += lines[i];    
+                }
+                else
+                {
+                    statsDisplay += lines[i] + "\n";
+                }
+                
             }
             return statsDisplay;
             //return " ----------\n|          |\n ----------";
@@ -314,42 +322,70 @@ namespace MyDungeonCrawlerMethods
         public static void ItemFindEvent()
         {   
             MessagePlayer(message.treasureChest);
-            int find = random.Next(1, 4);
+            CollectPlayerInput("");
+            int find = random.Next(1, 8);
             string item = "";
             switch(find)
             {
                 case 1:
+                case 2:
                     item = "a weapon";
                     UpdateStaticIntClassField(typeof(Player), "attack", 2);
                     MessagePlayer(message.itemFind(item));
                     MessagePlayer(message.attackUp);
+                    CollectPlayerInput("");
                     break;
-                case 2:
+                case 3:
+                case 4:
                     item = "a piece of armour";
                     UpdateStaticIntClassField(typeof(Player), "defence", 2);
                     MessagePlayer(message.itemFind(item));
                     MessagePlayer(message.defenceUp);
+                    CollectPlayerInput("");
                     break;
-                case 3:
+                case 5:
+                case 6:
                     item = "healing potion";
                     UpdateStaticIntClassField(typeof(Player), "healingPotion", 1);
                     MessagePlayer(message.itemFind(item));
+                    CollectPlayerInput("");
+                    break;
+                case 7:
+                    MessagePlayer(message.boobyTrap());
+                    CollectPlayerInput("");
+                    int damage = DiceRoll(1) * -1;
+                    UpdateStaticIntClassField(typeof(Player), "health", damage);
+                    MessagePlayer(message.boobyTrapDamage(damage));
+                    CollectPlayerInput("");
                     break;
             }
         }
 
         public static void HealingFountainEvent()
         {
-            int currentHealthValue = GetCurrentStaticIntClassFieldValue(typeof(Player), "Health");
+            int currentHealthValue = GetCurrentStaticIntClassFieldValue(typeof(Player), "health");
             int valueIncrease = Convert.ToInt32(Math.Round(Convert.ToDouble(currentHealthValue) / 2));
-            UpdateStaticIntClassField(typeof(Player), "health", valueIncrease);
-            MessagePlayer(message.newLine + message.healingFountain(valueIncrease));
+            if(currentHealthValue + valueIncrease > 25)
+            {
+                UpdateStaticIntClassField(typeof(Player), "health", valueIncrease - ((currentHealthValue + valueIncrease) - 25));
+                MessagePlayer(message.newLine + message.healingFountain(valueIncrease - ((currentHealthValue + valueIncrease) - 25)));
+            }
+            else
+            {
+                UpdateStaticIntClassField(typeof(Player), "health", valueIncrease);
+                MessagePlayer(message.newLine + message.healingFountain(valueIncrease));
+            }
+            
+            
+            CollectPlayerInput("");
         }
+        
 
         public static void MonsterDoesDamage()
         {
             MessagePlayer(message.newLine);
             MessagePlayer(message.monsterSwings());
+            CollectPlayerInput("");
             int damage = Monster.attackDamage(2);
             Player.health = Player.health - damage;
             if(Player.health < 0)
@@ -357,31 +393,58 @@ namespace MyDungeonCrawlerMethods
                 Player.health = 0;
             }
             MessagePlayer(message.monsterDoesDamage(damage));
-            
+            CollectPlayerInput("");
+            AssessPlayerHealth();
         }
 
         public static void PLayerDoesDamage()
         {
-            MessagePlayer(message.newLine);
+            
             MessagePlayer(message.playerSwings());
+            CollectPlayerInput("");
             int damage = Player.attackDamage(2);
             Monster.health = Monster.health - damage;
+            if(Monster.health < 0)
+            {
+                Monster.health = 0;
+            }
             MessagePlayer(message.playerDoesDamage(damage));
+            CollectPlayerInput("");
         }
 
         public static void Battle(bool whoStrikes)
         {
-            while(Monster.health > 0)
+            bool isFirstRound = true;
+            bool fled = false;
+            while(Monster.health > 0 && fled == false)
             {
+                
                 if(whoStrikes == true)
                 {
                     MonsterDoesDamage();
+                    CollectPlayerInput("");
                     whoStrikes = false;
+                    if(isFirstRound == true)
+                    {
+                        isFirstRound = false;
+                    }
                 }
                 else
                 {
-                    PLayerDoesDamage();
-                    whoStrikes = true;
+                    if(isFirstRound == true)
+                    {
+                        isFirstRound = false;
+                        whoStrikes = true;
+                        PLayerDoesDamage();
+                        CollectPlayerInput("");
+                    }
+                    else
+                    {
+                        whoStrikes = true;
+                        fled = BattleMenu();
+                        
+                    }
+                    
                 }
             }
             if(Monster.health < 1)
@@ -389,8 +452,8 @@ namespace MyDungeonCrawlerMethods
                 int reward = VictoryGoldRewardAmount();
                 UpdateStaticIntClassField(typeof(Player), "gold", reward);
                 MessagePlayer(message.victoryReward(reward));
+                CollectPlayerInput("");
             }
-            AssessPlayerHealth();
         }
 
         public static void MonsterEvent()
@@ -398,9 +461,11 @@ namespace MyDungeonCrawlerMethods
             bool whoStrikesFirst = true;
             Monster monster = new Monster();
             MessagePlayer(message.MonsterAppears());
+            CollectPlayerInput("");
             if(GotDetected() == true)
             {
                 MessagePlayer(message.MonsterSeesYou());
+                CollectPlayerInput("");
                 Battle(whoStrikesFirst);
             }
             else
@@ -413,11 +478,13 @@ namespace MyDungeonCrawlerMethods
                     {
                         MessagePlayer(message.approachTooNoisy);
                         MessagePlayer(message.MonsterSeesYou());
+                        CollectPlayerInput("");
                         Battle(whoStrikesFirst);
                     }
                     else
                     {
                         MessagePlayer(message.approachSuccessfull());
+                        CollectPlayerInput("");
                         whoStrikesFirst = false;
                         Battle(whoStrikesFirst);
                     }
@@ -428,11 +495,13 @@ namespace MyDungeonCrawlerMethods
                     {
                         MessagePlayer(message.sneakTooNoisy);
                         MessagePlayer(message.MonsterSeesYou());
+                        CollectPlayerInput("");
                         Battle(whoStrikesFirst);
                     }
                     else
                     {
                         MessagePlayer(message.sneakSuccess);
+                        CollectPlayerInput("");
                     }
                 }
             }
@@ -444,22 +513,32 @@ namespace MyDungeonCrawlerMethods
             int amount = FoundGoldAmount();
             UpdateStaticIntClassField(typeof(Player), "gold", amount);
             MessagePlayer(message.foundGold(amount));
+            CollectPlayerInput("");
         }
 
         public static void TrapEvent()
         {
             MessagePlayer(message.trap());
+            CollectPlayerInput("");
             int chance = random.Next(1, 101);
             if(chance > 50)
             {
                 int damage = -1 * DiceRoll(2);
                 UpdateStaticIntClassField(typeof(Player), "health", damage);
+                if(Player.health < 0)
+                {
+                    Player.health = 0;
+                }
                 MessagePlayer(message.trapDamage(damage * -1));
+                AssessPlayerHealth();
+                CollectPlayerInput("");
             }
             else
             {
                 MessagePlayer(message.trapAvoid);
+                CollectPlayerInput("");
             }
+
         }
 
         public static Room CreateNewRoom()
@@ -527,7 +606,7 @@ namespace MyDungeonCrawlerMethods
 
         public static bool PlayAgainMenu()
         {
-            method.MessagePlayer(message. newLine + message.playAgain);
+            method.MessagePlayer(message.newLine + message.playAgain);
             if(collectYorNselection() == "y")
             {
                 return true;
@@ -546,28 +625,80 @@ namespace MyDungeonCrawlerMethods
             switch(cause)
             {
                 case "death":
-                    MessagePlayer(message.death());
+                    throw new GameFinished(message.death());
                     return;
                 case "exit":
-                    MessagePlayer(message.exit + message.newLine + message.backstab());
+                    throw new GameFinished(message.exit + message.newLine + message.backstab());
                     return;
                 case "victory":
-                    MessagePlayer(message.victory() + message.newLine + message.backstab());
+                    throw new GameFinished(message.victory() + message.newLine + message.backstab());
                     return;
                 default:
                     return;
             }
-            throw new GameFinished();
+            
         }
 
-        public static void BattleMenu()
+        public static bool BattleMenu()
         {
+            MessagePlayer(GenerateStatsDisplay());
+            CollectPlayerInput("");
+            MessagePlayer(message.battleMenu());
+            int choice = CollectMenuSelection(3);
+            MessagePlayer(message.newLine);
+            switch(choice)
+            {
+                case 1:
+                    PLayerDoesDamage();
+                    return false;
+                case 2:
+                    if(Player.healingPotion > 0)
+                    {
+                        Player.healingPotion -= 1;
+                        int heal = DiceRoll(3);
+                        Player.health += heal;
+                        MessagePlayer(message.heal(heal));
+                        CollectPlayerInput("");
+                    }
+                    else
+                    {
+                        MessagePlayer(message.noPotions());
+                        CollectPlayerInput("");
+                    }
+                    return false;
+                case 3:
+                    int escape = DiceRoll(2);
+                    int chase = DiceRoll(2);
+                    if(escape > chase)
+                    {
+                        MessagePlayer(message.flee());
+                        CollectPlayerInput("");
+                    }
+                    else
+                    {
+                        int damage = Convert.ToInt32(Convert.ToDouble(Player.health) * 0.3);
+                        Player.health -= damage;
+                        MessagePlayer(message.fleeDamage(damage));
+                        CollectPlayerInput("");
+                        AssessPlayerHealth();
+                    }
+                    return true;
+                default:
+                    return false;
+            }
+            //atack
 
+            //heal 3D6
+
+            //flee
         }
         public static void NewRoomOrQuitMenu()
         {
+            MessagePlayer(GenerateStatsDisplay());
+            CollectPlayerInput("");
             MessagePlayer(message.askNextRoom);
             string choice = collectYorNselection();
+            MessagePlayer(message.newLine);
             if(choice == "n")
             {
                 FinishGame(Cause.exit);
@@ -583,12 +714,17 @@ namespace MyDungeonCrawlerMethods
         public static void ProceedFromRoomToRoom()
         {
             bool isFirstRoom = true;
-            int numberOfRooms = 10;
+            int numberOfRooms = 15;
             do
             {
                 if(isFirstRoom == true)
                 {
+                    MessagePlayer(GenerateStatsDisplay());
+                    CollectPlayerInput("");
                     MessagePlayer(message.goodLuck());
+                    CollectPlayerInput("");
+                    MessagePlayer($"This is Room: {16 - numberOfRooms}");
+                    CollectPlayerInput("");
                     DoCurrentRoom();
                     isFirstRoom = false;
                     numberOfRooms -= 1;
@@ -596,6 +732,9 @@ namespace MyDungeonCrawlerMethods
                 else
                 {
                     MessagePlayer(message.proceed);
+                    CollectPlayerInput("");
+                    MessagePlayer($"This is Room: {16 - numberOfRooms}");
+                    CollectPlayerInput("");
                     DoCurrentRoom();
                     numberOfRooms -= 1;
                 }
@@ -608,6 +747,7 @@ namespace MyDungeonCrawlerMethods
             MessagePlayer(message.welcome);
             Player player = new Player();
             Player.name = CollectPlayerName();
+            MessagePlayer(message.newLine);
             ProceedFromRoomToRoom();
         }
 
