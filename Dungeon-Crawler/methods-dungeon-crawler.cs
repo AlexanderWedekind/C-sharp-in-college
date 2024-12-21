@@ -93,7 +93,7 @@ namespace MyDungeonCrawlerMethods
             }
             if(input.Length > 14)
             {
-                input = input.Substring(0, 14);
+                input = input.Substring(0, 20);
             }
             return input;
         }
@@ -118,15 +118,141 @@ namespace MyDungeonCrawlerMethods
             return input.Substring(0, 1);
         }
 
-        
-
         public static string GenerateStatsDisplay()
         {
-            //  |+-----------------------------------------
-            //  |         cedric the swine herd            |
-            //  |+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-|
-            //  | health: 25 | potion: 2 | attack: 2 | defence: 2 | gold: 100 |
-            return " ----------\n|          |\n ----------";
+            string statsDisplay = "";
+
+            string name = String.Concat("Name: \"", Player.name, "\"");
+            string health = String.Concat("Health: ", Convert.ToString(Player.health));
+            string healingPotion = String.Concat("Healing Potions: ", Convert.ToString(Player.healingPotion));
+            string gold = String.Concat("Gold: ", Convert.ToString(Player.gold));
+            string attack = String.Concat("Attack: ", Convert.ToString(Player.attack));
+            string defence = String.Concat("Defence: ", Convert.ToString(Player.defence));
+
+            string healthPlusPotions()
+            {
+                string line = "";
+                if(health.Length < healingPotion.Length)
+                {
+                    line = health.PadLeft(healingPotion.Length + 1).PadRight(healingPotion.Length + 2) + "|" + healingPotion.PadLeft(healingPotion.Length + 1).PadRight(healingPotion.Length + 2);
+                }
+                else if(healingPotion.Length < health.Length)
+                {
+                    line = health.PadLeft(health.Length + 1).PadRight(health.Length + 2) + "|" + healingPotion.PadRight(health.Length + 1).PadLeft(health.Length + 2);
+                }
+                else if(health.Length == healingPotion.Length)
+                {
+                    line =health.PadLeft(health.Length + 1).PadRight(health.Length + 2) + "|" + healingPotion.PadLeft(healingPotion.Length + 1).PadRight(healingPotion.Length + 2);
+                }
+                return line;
+            }
+
+            string attackPlusDefence()
+            {
+                string line = "";
+                if(attack.Length < defence.Length)
+                {
+                    line = attack.PadLeft(defence.Length + 1).PadRight(defence.Length + 2) + "|" + defence.PadLeft(defence.Length + 1).PadRight(defence.Length + 2);
+                }
+                else if(defence.Length < attack.Length)
+                {
+                    line = attack.PadLeft(attack.Length + 1).PadRight(attack.Length + 2) + "|" + defence.PadRight(attack.Length + 1).PadLeft(attack.Length + 2);
+                }
+                else if(attack.Length == defence.Length)
+                {
+                    line = attack.PadLeft(attack.Length + 1).PadRight(attack.Length + 2) + "|" + defence.PadLeft(defence.Length + 1).PadRight(defence.Length + 2);
+                }
+                return line;
+            }
+
+            string[] lines =  
+            {
+                "",
+                name.PadLeft(name.Length + 1).PadRight(name.Length + 2),
+                "",
+                healthPlusPotions(),
+                "",
+                attackPlusDefence(),
+                "",
+                gold.PadLeft(gold.Length + 1).PadRight(gold.Length + 2),
+                "",
+            };
+
+            int topBorder = 0;
+            int nameLine = 1;
+            int nameBorder = 2;
+            int healthAndPotionLine = 3;
+            int healthBorder = 4;
+            int attackAndDefenceLine = 5;
+            int attackBorder = 6;
+            int goldLine = 7;
+            int bottomBorder = 8;
+
+            int longestLineLength = 0;
+
+            for(int i = 0; i < lines.Length; i++)
+            {
+                if(lines[i].Length > longestLineLength)
+                {
+                    longestLineLength = lines[i].Length;
+                }
+            }
+
+            for(int i = 1; i < lines.Length; i += 2)
+            {
+                int padd = 0;
+                if(lines[i].Length < longestLineLength)
+                {
+                    if((longestLineLength - lines[i].Length) % 2 == 0)
+                    {
+                        padd = (longestLineLength - lines[i].Length) / 2;
+                        lines[i] = "|" + lines[i].PadLeft(lines[i].Length + padd).PadRight(lines[i].Length + (padd * 2)) + "|";
+                    }
+                    else
+                    {
+                        padd = ((longestLineLength - lines[i].Length) + 1) / 2;
+                        lines[i] = "|" + lines[i].PadLeft(lines[i].Length + (padd - 1)).PadRight(lines[i].Length + (padd * 2) - 1) + "|";
+                    }
+                }
+                else
+                {
+                    lines[i] = "|" + lines[i] + "|";
+                }
+            }
+
+            for (int i = 0; i < lines.Length; i+=2)
+            {
+                for(int j = 0; j < longestLineLength + 1; j++)
+                {
+                    if(lines[i].Length == 0)
+                    {
+                        lines[i] += "+";
+                    }
+                    else if(lines[i].Length == longestLineLength + 1)
+                    {
+                        lines[i] = lines[i].PadLeft(1);
+                    }
+                    else if(i == 4)
+                    {
+                        lines[i] += "-";
+                    }
+                    else if(lines[i].Substring(lines[i].Length - 1, 1) == "-")
+                    {
+                        lines[i] += "+";
+                    }
+                    else if(lines[i].Substring(lines[i].Length - 1, 1) == "+")
+                    {
+                        lines[i] += "-";
+                    }
+                }
+            }
+
+            for(int i = 0; i < lines.Length; i ++)
+            {
+                statsDisplay += lines[i] + "\n";
+            }
+            return statsDisplay;
+            //return " ----------\n|          |\n ----------";
         }
 
         public static int OneD6()
@@ -226,7 +352,12 @@ namespace MyDungeonCrawlerMethods
             MessagePlayer(message.monsterSwings());
             int damage = Monster.attackDamage(2);
             Player.health = Player.health - damage;
+            if(Player.health < 0)
+            {
+                Player.health = 0;
+            }
             MessagePlayer(message.monsterDoesDamage(damage));
+            
         }
 
         public static void PLayerDoesDamage()
@@ -240,7 +371,7 @@ namespace MyDungeonCrawlerMethods
 
         public static void Battle(bool whoStrikes)
         {
-            while(Monster.health > 0 && Player.health > 0)
+            while(Monster.health > 0)
             {
                 if(whoStrikes == true)
                 {
