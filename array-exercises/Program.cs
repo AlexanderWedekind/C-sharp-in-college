@@ -6,8 +6,21 @@ namespace arrayExercises
     {
         public static string intOrfloatChoiceInstructions = "(type \"1\" for whole numbers, or \"2\" for floating points, then press ENTER)";
         public static string intChoiceInstructions = "(type your choice using the number keys, then press ENTER)";
-        public static string floatchoiceInstructions = "(type your choice using the number keys and the . on your keyboard, \neg: \" 3.5 \", or \" 2.4 \" , then press ENTER)";
-        public static int count = 0;
+        //public static string floatchoiceInstructions = "(type your choice using the number keys and the . on your keyboard, \neg: \" 3.5 \", or \" 2.4 \" , then press ENTER)";
+        public static string numberChoiceInstructions()
+        {
+            string instructions = "";
+            if(intOrFloat == 1)
+            {
+                instructions = "(choose using the number keys on your keyboard, then press ENTER)";
+            }
+            if(intOrFloat == 2)
+            {
+                instructions = "(choose using the number keys and the . key, eg: '3.1' or '5.7', then press ENTER)";
+            }
+            return instructions;
+        }
+        public static int count = 1;
         public static int howMany = 0;
         public static string numAppend = "";
         public static int intOrFloat = 0;
@@ -49,43 +62,100 @@ namespace arrayExercises
             }
             while(howMany < 1);
 
-            int[] userchoseNumbers = new int[howMany];
+            int[] userChosenNumbers = new int[howMany];
 
-            Console.Write("Thank you. ");
+            Console.WriteLine("Thank you. ");
             do
             {
-                switch(count % 10)
+                switch(count < 10)
                 {
-                    case 0:
-                        numAppend = "th";
+                    case true:
+                        switch(count)
+                        {
+                            case 1:
+                                numAppend = "st";
+                                break;
+                            case 2:
+                                numAppend = "nd";
+                                break;
+                            case 3:
+                                numAppend = "rd";
+                                break;
+                            default:
+                                numAppend = "th";
+                                break;
+                        }
                         break;
-                    case 1:
-                        numAppend = "st";
-                        break;
-                    case 2:
-                        numAppend = "nd";
-                        break;
-                    case 3:
-                        numAppend = "rd";
-                        break;
-                    case 4:
-                        numAppend = "th";
-                        break;
-                    case 5:
-                        numAppend = "th";
+                    case false:
+                        switch(count % 10)
+                        {
+                            case 0:
+                                numAppend = "th";
+                                break;
+                            case 1:
+                                numAppend = "st";
+                                break;
+                            case 2:
+                                numAppend = "nd";
+                                break;
+                            case 3:
+                                numAppend = "rd";
+                                break;
+                            case 4:
+                                numAppend = "th";
+                                break;
+                            case 5:
+                                numAppend = "th";
+                                break;
+                        }
+
                         break;
                 }
+                
+                if(count > 100)
+                {
+                    if(count % 100 == 11)
+                    {
+                        numAppend = "th";
+                    }
+                }
+
                 try
                 {
-                    Console.WriteLine($"choose your {count}{} number \n");
-                    userChosenNumbers[count] = Int32.Parse(Console.ReadLine())
+                    Console.WriteLine($"Choose your {count}{numAppend} number.\n{numberChoiceInstructions()}");
+                    userChosenNumbers[count - 1] = Int32.Parse(Console.ReadLine());
+                    count += 1;
                 }
-                catch(Exception ex.message)
+                catch(Exception ex)
                 {
-
+                    Console.WriteLine($"Whoops! Couldn't read that, it wasn't the correct format.");
                 }
             }
-            while();
+            while(count <= userChosenNumbers.Length);
+
+            Console.WriteLine("Your Array of chose numbers: ");
+            for(int i = 0; i < userChosenNumbers.Length; i++)
+            {
+                if(userChosenNumbers.Length == 1)
+                {
+                    Console.Write($"{{ {userChosenNumbers[0]}}}");
+                }
+                else
+                {
+                    if(i == userChosenNumbers.Length - 1)
+                    {
+                        Console.Write($" , {userChosenNumbers[i]} }}");
+                    }
+                    else if(i == 0)
+                    {
+                        Console.Write($"{{ {userChosenNumbers[i]}");
+                    }
+                    else
+                    {
+                        Console.Write($" , {userChosenNumbers[i]}");
+                    }
+                }
+            }
         }
     }
 }
