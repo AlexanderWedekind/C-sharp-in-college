@@ -25,6 +25,64 @@ namespace arrayExercises
         public static string numAppend = "";
         public static int intOrFloat = 0;
 
+        public static string NumAppend(int count)
+        {
+            string numAppend = "";
+            switch(count < 10)
+            {
+                case true:
+                    switch(count)
+                    {
+                        case 1:
+                            numAppend = "st";
+                            break;
+                        case 2:
+                            numAppend = "nd";
+                            break;
+                        case 3:
+                            numAppend = "rd";
+                            break;
+                        default:
+                            numAppend = "th";
+                            break;
+                    }
+                    break;
+                case false:
+                    switch(count % 10)
+                    {
+                        case 0:
+                            numAppend = "th";
+                            break;
+                        case 1:
+                            numAppend = "st";
+                            break;
+                        case 2:
+                            numAppend = "nd";
+                            break;
+                        case 3:
+                            numAppend = "rd";
+                            break;
+                        case 4:
+                            numAppend = "th";
+                            break;
+                        case 5:
+                            numAppend = "th";
+                            break;
+                    }
+
+                    break;
+            }
+            
+            if(count > 100)
+            {
+                if(count % 100 == 11)
+                {
+                    numAppend = "th";
+                }
+            }
+
+            return numAppend;
+        }
         public static void Main()
         {
 
@@ -62,100 +120,101 @@ namespace arrayExercises
             }
             while(howMany < 1);
 
-            int[] userChosenNumbers = new int[howMany];
+            int[] userChosenIntArr = new int[howMany];
+            double[] userChosenDoubleArr = new double[howMany];
+            
 
             Console.WriteLine("Thank you. ");
-            do
-            {
-                switch(count < 10)
-                {
-                    case true:
-                        switch(count)
-                        {
-                            case 1:
-                                numAppend = "st";
-                                break;
-                            case 2:
-                                numAppend = "nd";
-                                break;
-                            case 3:
-                                numAppend = "rd";
-                                break;
-                            default:
-                                numAppend = "th";
-                                break;
-                        }
-                        break;
-                    case false:
-                        switch(count % 10)
-                        {
-                            case 0:
-                                numAppend = "th";
-                                break;
-                            case 1:
-                                numAppend = "st";
-                                break;
-                            case 2:
-                                numAppend = "nd";
-                                break;
-                            case 3:
-                                numAppend = "rd";
-                                break;
-                            case 4:
-                                numAppend = "th";
-                                break;
-                            case 5:
-                                numAppend = "th";
-                                break;
-                        }
 
-                        break;
-                }
-                
-                if(count > 100)
+            if(intOrFloat == 1)
+            {
+                do
                 {
-                    if(count % 100 == 11)
+                    try
                     {
-                        numAppend = "th";
+                        Console.WriteLine($"Choose your {count}{NumAppend(count)} number.\n{numberChoiceInstructions()}");                        
+                        userChosenIntArr[count - 1] = Int32.Parse(Console.ReadLine());                        
+                        count += 1;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine($"Whoops! Couldn't read that, it wasn't the correct format.");
                     }
                 }
-
-                try
-                {
-                    Console.WriteLine($"Choose your {count}{numAppend} number.\n{numberChoiceInstructions()}");
-                    userChosenNumbers[count - 1] = Int32.Parse(Console.ReadLine());
-                    count += 1;
-                }
-                catch(Exception ex)
-                {
-                    Console.WriteLine($"Whoops! Couldn't read that, it wasn't the correct format.");
-                }
+                while(count <= userChosenIntArr.Length);                
             }
-            while(count <= userChosenNumbers.Length);
-
-            Console.WriteLine("Your Array of chose numbers: ");
-            for(int i = 0; i < userChosenNumbers.Length; i++)
+            if(intOrFloat == 2)
             {
-                if(userChosenNumbers.Length == 1)
+                do
                 {
-                    Console.Write($"{{ {userChosenNumbers[0]}}}");
-                }
-                else
-                {
-                    if(i == userChosenNumbers.Length - 1)
+                    try
                     {
-                        Console.Write($" , {userChosenNumbers[i]} }}");
+                        Console.WriteLine($"Choose your {count}{NumAppend(count)} number.\n{numberChoiceInstructions()}");                        
+                        userChosenDoubleArr[count -1] = Convert.ToDouble(Console.Read());                        
+                        count += 1;
                     }
-                    else if(i == 0)
+                    catch(Exception ex)
                     {
-                        Console.Write($"{{ {userChosenNumbers[i]}");
+                        Console.WriteLine($"Whoops! Couldn't read that, it wasn't the correct format.");
+                    }
+                }
+                while(count <= userChosenDoubleArr.Length);
+
+            }
+            
+            
+            Console.WriteLine("Your Array of chose numbers: ");
+            if(intOrFloat == 1)
+            {
+                for(int i = 0; i < userChosenIntArr.Length; i++)
+                {
+                    if(userChosenIntArr.Length == 1)
+                    {
+                        Console.Write($"{{ {userChosenIntArr[0]}}}");
                     }
                     else
                     {
-                        Console.Write($" , {userChosenNumbers[i]}");
+                        if(i == userChosenIntArr.Length - 1)
+                        {
+                            Console.Write($" , {userChosenIntArr[i]} }}");
+                        }
+                        else if(i == 0)
+                        {
+                            Console.Write($"{{ {userChosenIntArr[i]}");
+                        }
+                        else
+                        {
+                            Console.Write($" , {userChosenIntArr[i]}");
+                        }
                     }
                 }
             }
+            if(intOrFloat == 2)
+            {
+                for(int i = 0; i < userChosenDoubleArr.Length; i++)
+                {
+                    if(userChosenDoubleArr.Length == 1)
+                    {
+                        Console.Write($"{{ {userChosenDoubleArr[0]}}}");
+                    }
+                    else
+                    {
+                        if(i == userChosenDoubleArr.Length - 1)
+                        {
+                            Console.Write($" , {userChosenDoubleArr[i]} }}");
+                        }
+                        else if(i == 0)
+                        {
+                            Console.Write($"{{ {userChosenDoubleArr[i]}");
+                        }
+                        else
+                        {
+                            Console.Write($" , {userChosenDoubleArr[i]}");
+                        }
+                    }
+                }
+            }
+            
         }
     }
 }
