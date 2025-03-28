@@ -17,6 +17,24 @@ class Program
         return userChosenArr;
     }
 
+    static string BuildStringRepresentationOfArray(int[] arr)
+    {
+        string arrayRepresentation = "";
+        foreach(int num in arr)
+        {
+            if(arrayRepresentation.Length == 0)
+            {
+                arrayRepresentation += $"{{ {num}";
+            }
+            else
+            {
+                arrayRepresentation += $", {num}";
+            }
+        }
+        arrayRepresentation += " }";
+        return arrayRepresentation;
+    }
+
     static int Menu(int nrOfChoices, string message)
     {
         int userInput;
@@ -26,7 +44,7 @@ class Program
             if(Int32.TryParse(Console.ReadLine(), out int result))
             {
                 userInput = result;
-                if(userInput > 0 && userInput < nrOfChoices)
+                if(userInput > 0 && userInput < nrOfChoices + 1)
                 {
 
                     return userInput;
@@ -61,6 +79,6 @@ class Program
                 sortedArray = sortAlgos.InsertSort(unsortedArray);
                 break;
         }
-        Console.WriteLine($"The sorted array is: {{ {(string() => {string arrStr = ""; foreach(int num in sortedArray){if(arrStr.Length > 0){arrStr += ", ";}arrStr+=num;} return arrStr;})} }}");
+        Console.WriteLine($"The sorted array is: {BuildStringRepresentationOfArray(sortedArray)}");
     }
 }
